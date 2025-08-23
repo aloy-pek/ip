@@ -93,8 +93,8 @@ public class Kuro {
                 return parseDeadline(fullCommand);
             case "event":
                 return parseEvent(fullCommand);
-            case "mark", "unmark":
-                return parseMarkUnmark(fullCommand);
+            case "mark", "unmark", "delete":
+                return parseMarkUnmarkDelete(fullCommand);
             case "list", "bye": //misc Command
                 return new Task(command);
             default:
@@ -114,7 +114,7 @@ public class Kuro {
             if (!fullCommand.contains("/by")) {
                 throw new kuroException("Sumimasen, invalid command or format. Please try again.");
             }
-            
+
             String description = fullCommand.substring(9, fullCommand.indexOf("/by")).trim();
             String by = fullCommand.substring(fullCommand.indexOf("/by") + 4).trim();
             return new Deadline(description, by);
@@ -130,7 +130,7 @@ public class Kuro {
             return new Event(description, start, end);
         }
 
-        private static Task parseMarkUnmark(String fullCommand) throws kuroException {
+        private static Task parseMarkUnmarkDelete(String fullCommand) throws kuroException {
             try {
                 int index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
                 if (index > taskList.size() - 1) {
@@ -142,12 +142,12 @@ public class Kuro {
             }
         }
     }
-    
+
     public static class kuroException extends Exception {
         kuroException(String message) {
             super(message);
         }
-        
+
         @Override
         public String toString() {
             return "Error while interacting with Kuro: " + getMessage();
@@ -166,11 +166,10 @@ public class Kuro {
             String fullCommand = scannerObj.nextLine().trim();
             int index;
             Task newTask;
-            
+
             try {
                 newTask = TaskParser.parse(fullCommand);
-            }
-            catch (kuroException e) {
+            } catch (kuroException e) {
                 System.out.println(e.toString());
                 continue;
             }
@@ -199,6 +198,18 @@ public class Kuro {
                         %s
                         ____________________________________________________________
                         %n""", taskList.get(index).toString());
+                break;
+            case "delete":
+                index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
+                String taskRemoved = taskList.get(index).toString();
+                taskList.remove(index);
+                System.out.printf("""
+                        ____________________________________________________________
+                        Hai, I have removed this task:
+                        %s
+                        Now, you have %d tasks in the list.
+                        ____________________________________________________________
+                        %n""", taskRemoved, taskList.size());
                 break;
             case "list":
                 StringBuilder listString = new StringBuilder();

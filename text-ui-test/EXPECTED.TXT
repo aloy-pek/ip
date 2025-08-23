@@ -66,6 +66,20 @@ Douzo,Here are the task in your list:
 3. [E][ ] Write Reflection (From: 30 August to: 31 August)
 ____________________________________________________________
 
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+Hai, I have removed this task:
+[E][ ] Write Reflection (From: 30 August to: 31 August)
+Now, you have 2 tasks in the list.
+____________________________________________________________
+
+____________________________________________________________
+Douzo,Here are the task in your list:
+
+1. [T][X] Brush Teeth
+2. [D][X] Read Book (by: 30 August)
+____________________________________________________________
+
 ____________________________________________________________
  Sayonara! Hope to see you again soon!
 ____________________________________________________________
