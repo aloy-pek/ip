@@ -82,8 +82,8 @@ public class Kuro {
         }
     }
 
-    public class TaskParser {
-        public static Task parse(String fullCommand) {
+    public static class TaskParser {
+        public static Task parse(String fullCommand) throws kuroException {
             String command = fullCommand.split(" ")[0].toLowerCase();
 
             switch (command) {
@@ -98,20 +98,21 @@ public class Kuro {
             case "list", "bye": //misc Command
                 return new Task(command);
             default:
-                return null;
+                throw new kuroException("Sumimasen, specified command is not a registered command");
             }
         }
 
-        private static Task parseTodo(String fullCommand) {
+        private static Task parseTodo(String fullCommand) throws kuroException {
             if (fullCommand.length() > 4) {
                 return new Todo(fullCommand.substring(fullCommand.indexOf(" ") + 1));
+            } else {
+                throw new kuroException("Sumimasen, please specify the task description.");
             }
-            return null;
         }
 
-        private static Task parseDeadline(String fullCommand) {
+        private static Task parseDeadline(String fullCommand) throws kuroException {
             if (!fullCommand.contains("/by")) {
-                return null;
+                throw new kuroException("Sumimasen, invalid command or format. Please try again.");
             }
             
             String description = fullCommand.substring(9, fullCommand.indexOf("/by")).trim();
@@ -119,9 +120,9 @@ public class Kuro {
             return new Deadline(description, by);
         }
 
-        private static Task parseEvent(String fullCommand) {
+        private static Task parseEvent(String fullCommand) throws kuroException {
             if (!fullCommand.contains("/from") || !fullCommand.contains("/to") || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")) {
-                return null;
+                throw new kuroException("Sumimasen, invalid command or format. Please try again.");
             }
             String description = fullCommand.substring(6, fullCommand.indexOf("/from")).trim();
             String start = fullCommand.substring(fullCommand.indexOf("/from") + 6, fullCommand.indexOf("/to")).trim();
@@ -129,16 +130,27 @@ public class Kuro {
             return new Event(description, start, end);
         }
 
-        private static Task parseMarkUnmark(String fullCommand) {
+        private static Task parseMarkUnmark(String fullCommand) throws kuroException {
             try {
                 int index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
                 if (index > taskList.size() - 1) {
-                    return null;
+                    throw new Exception();
                 }
                 return new Task(fullCommand.split(" ")[0]);
             } catch (Exception e) {
-                return null;
+                throw new kuroException("Sumimasen, invalid command or format. Please try again.");
             }
+        }
+    }
+    
+    public static class kuroException extends Exception {
+        kuroException(String message) {
+            super(message);
+        }
+        
+        @Override
+        public String toString() {
+            return "Error while interacting with Kuro: " + getMessage();
         }
     }
 
@@ -153,13 +165,16 @@ public class Kuro {
         while (isOperating) {
             String fullCommand = scannerObj.nextLine().trim();
             int index;
+            Task newTask;
             
-            Task newTask = TaskParser.parse(fullCommand);
-
-            if (newTask == null) {
-                System.out.println("Sumimasen, invalid command or format. Please try again.");
+            try {
+                newTask = TaskParser.parse(fullCommand);
+            }
+            catch (kuroException e) {
+                System.out.println(e.toString());
                 continue;
             }
+
 
             switch (newTask.command) {
             case "bye":

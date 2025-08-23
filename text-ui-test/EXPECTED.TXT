@@ -3,13 +3,13 @@ ____________________________________________________________
  What can I do for you?
 ____________________________________________________________
 
-Sumimasen, invalid command or format. Please try again.
-Sumimasen, invalid command or format. Please try again.
-Sumimasen, invalid command or format. Please try again.
-Sumimasen, invalid command or format. Please try again.
-Sumimasen, invalid command or format. Please try again.
-Sumimasen, invalid command or format. Please try again.
-Sumimasen, invalid command or format. Please try again.
+Error while interacting with Kuro: Sumimasen, specified command is not a registered command
+Error while interacting with Kuro: Sumimasen, please specify the task description.
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
 ____________________________________________________________
 Wakarimashita, I have added this task:
 [T][ ] Brush Teeth
@@ -36,7 +36,7 @@ Douzo,Here are the task in your list:
 3. [E][ ] Write Reflection (From: 30 August to: 31 August)
 ____________________________________________________________
 
-Sumimasen, invalid command or format. Please try again.
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
 ____________________________________________________________
 Sugoi, I have marked this task as done:
 [T][X] Brush Teeth
@@ -52,7 +52,7 @@ Sugoi, I have marked this task as done:
 [E][X] Write Reflection (From: 30 August to: 31 August)
 ____________________________________________________________
 
-Sumimasen, invalid command or format. Please try again.
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
 ____________________________________________________________
 Hai, I have marked this task as not done yet:
 [E][ ] Write Reflection (From: 30 August to: 31 August)
