@@ -132,6 +132,9 @@ public class Kuro {
         private static Task parseMarkUnmark(String fullCommand) {
             try {
                 int index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
+                if (index > taskList.size() - 1) {
+                    return null;
+                }
                 return new Task(fullCommand.split(" ")[0]);
             } catch (Exception e) {
                 return null;
