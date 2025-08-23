@@ -41,41 +41,129 @@ public class Kuro {
         }
     }
 
+    public static class Todo extends Task {
+        public Todo(String description) {
+            super(description);
+        }
+
+        @Override
+        public String toString() {
+            return "[T]" + super.toString();
+        }
+    }
+
+    public static class Deadline extends Task {
+        protected String by;
+
+        public Deadline(String description, String by) {
+            super(description);
+            this.by = by;
+        }
+
+        @Override
+        public String toString() {
+            return "[D]" + super.toString() + " (by: " + by + ")";
+        }
+    }
+
+    public static class Event extends Task {
+        protected String start;
+        protected String end;
+
+        public Event(String description, String start, String end) {
+            super(description);
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public String toString() {
+            return "[E]" + super.toString() + " (From: " + start + " to: " + end + ")";
+        }
+    }
+
+    public class TaskParser {
+        public static Task parse(String fullCommand) {
+            String command = fullCommand.split(" ")[0].toLowerCase();
+
+            switch (command) {
+            case "todo":
+                return parseTodo(fullCommand);
+            case "deadline":
+                return parseDeadline(fullCommand);
+            case "event":
+                return parseEvent(fullCommand);
+            case "mark", "unmark":
+                return parseMarkUnmark(fullCommand);
+            case "list", "bye": //misc Command
+                return new Task(command);
+            default:
+                return null;
+            }
+        }
+
+        private static Task parseTodo(String fullCommand) {
+            if (fullCommand.length() > 4) {
+                return new Todo(fullCommand.substring(fullCommand.indexOf(" ") + 1));
+            }
+            return null;
+        }
+
+        private static Task parseDeadline(String fullCommand) {
+            if (!fullCommand.contains("/by")) {
+                return null;
+            }
+            
+            String description = fullCommand.substring(9, fullCommand.indexOf("/by")).trim();
+            String by = fullCommand.substring(fullCommand.indexOf("/by") + 4).trim();
+            return new Deadline(description, by);
+        }
+
+        private static Task parseEvent(String fullCommand) {
+            if (!fullCommand.contains("/from") || !fullCommand.contains("/to") || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")) {
+                return null;
+            }
+            String description = fullCommand.substring(6, fullCommand.indexOf("/from")).trim();
+            String start = fullCommand.substring(fullCommand.indexOf("/from") + 6, fullCommand.indexOf("/to")).trim();
+            String end = fullCommand.substring(fullCommand.indexOf("/to") + 4).trim();
+            return new Event(description, start, end);
+        }
+
+        private static Task parseMarkUnmark(String fullCommand) {
+            try {
+                int index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
+                return new Task(fullCommand.split(" ")[0]);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         boolean isOperating = true;
 
         System.out.println(welcomeMsg);
 
         //continue wait for input until user type bye
-        while (isOperating) {
-            Scanner scannerObj = new Scanner(System.in);
-            String command = scannerObj.nextLine();
-            int index = 0;
-            
-            //pre-processing of command
-            if (command.contains("unmark")) {
-                index = Integer.parseInt(command.substring(7)) - 1;
-                command = "unmark";
-                if (index > taskList.size() - 1) {
-                    System.out.println("Sumimasen, Please check your index again!");
-                    continue;
-                }
-            } else if (command.contains("mark")) {
-                index = Integer.parseInt(command.substring(5)) - 1;
-                command = "mark";
-                if (index > taskList.size() - 1) {
-                    System.out.println("Sumimasen, Please check your index again!");
-                    continue;
-                }
-            }
-            
-            Task newTask = new Task(command);
+        Scanner scannerObj = new Scanner(System.in);
 
-            switch (newTask.command.toLowerCase()) {
+        while (isOperating) {
+            String fullCommand = scannerObj.nextLine().trim();
+            int index;
+            
+            Task newTask = TaskParser.parse(fullCommand);
+
+            if (newTask == null) {
+                System.out.println("Sumimasen, invalid command or format. Please try again.");
+                continue;
+            }
+
+            switch (newTask.command) {
             case "bye":
                 isOperating = false;
                 break;
             case "mark":
+                index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
                 taskList.get(index).setStatus(true);
                 System.out.printf("""
                         ____________________________________________________________
@@ -85,6 +173,7 @@ public class Kuro {
                         %n""", taskList.get(index).toString());
                 break;
             case "unmark":
+                index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
                 taskList.get(index).setStatus(false);
                 System.out.printf("""
                         ____________________________________________________________
@@ -115,11 +204,14 @@ public class Kuro {
                 taskList.add(newTask);
                 System.out.printf("""
                         ____________________________________________________________
-                        added: %s
+                        Wakarimashita, I have added this task:
+                        %s
+                        Now, you have %d tasks in the list.
                         ____________________________________________________________
-                        %n""", newTask.command);
+                        %n""", newTask.toString(), taskList.size());
             }
         }
+        scannerObj.close();
         System.out.println(goodbyeMsg);
     }
 }
