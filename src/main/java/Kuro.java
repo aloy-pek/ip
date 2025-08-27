@@ -86,20 +86,14 @@ public class Kuro {
         public static Task parse(String fullCommand) throws kuroException {
             String command = fullCommand.split(" ")[0].toLowerCase();
 
-            switch (command) {
-            case "todo":
-                return parseTodo(fullCommand);
-            case "deadline":
-                return parseDeadline(fullCommand);
-            case "event":
-                return parseEvent(fullCommand);
-            case "mark", "unmark", "delete":
-                return parseMarkUnmarkDelete(fullCommand);
-            case "list", "bye": //misc Command
-                return new Task(command);
-            default:
-                throw new kuroException("Sumimasen, specified command is not a registered command");
-            }
+            return switch (command) {
+                case "todo" -> parseTodo(fullCommand);
+                case "deadline" -> parseDeadline(fullCommand);
+                case "event" -> parseEvent(fullCommand);
+                case "mark", "unmark", "delete" -> parseMarkUnmarkDelete(fullCommand);
+                case "list", "bye" -> new Task(command); //misc task
+                default -> throw new kuroException("Sumimasen, specified command is not a registered command");
+            };
         }
 
         private static Task parseTodo(String fullCommand) throws kuroException {
@@ -121,7 +115,9 @@ public class Kuro {
         }
 
         private static Task parseEvent(String fullCommand) throws kuroException {
-            if (!fullCommand.contains("/from") || !fullCommand.contains("/to") || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")) {
+            if (!fullCommand.contains("/from") 
+                    || !fullCommand.contains("/to") 
+                    || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")) {
                 throw new kuroException("Sumimasen, invalid command or format. Please try again.");
             }
             String description = fullCommand.substring(6, fullCommand.indexOf("/from")).trim();
