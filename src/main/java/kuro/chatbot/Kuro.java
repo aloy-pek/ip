@@ -7,11 +7,23 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 
-import kuro.constants.Messages;
+import kuro.ui.Ui;
 
 
 public class Kuro {
     static List<Task> taskList = new ArrayList<>();
+    private Ui ui;
+
+    public Kuro(String filePath) {
+        ui = new Ui();
+//        storage = new Storage(filePath);
+//        try {
+//            tasks = new TaskList(storage.load());
+//        } catch (DukeException e) {
+//            ui.showLoadingError();
+//            tasks = new TaskList();
+//        }
+    }
 
     //class for the task that user typed
     public static class Task {
@@ -146,39 +158,35 @@ public class Kuro {
         }
     }
 
-    public static void main(String[] args) {
+    public void run() {
         boolean isOperating = true;
-
-        try {
-            File taskDb = new File("./data/kuro.txt");
-            //Scan kuro.txt and initialize taskList
-            Scanner dbScanner = new Scanner(taskDb);
-            while (dbScanner.hasNextLine()) {
-                String data = dbScanner.nextLine();
-                //todo 
-            }
-            dbScanner.close();
-        } catch (FileNotFoundException e) {
-            File newDb = new File("./data/kuro.txt");
-            try {
-                newDb.createNewFile();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-
-        System.out.println(Messages.WELCOME_MESSAGE);
-
-        //continue wait for input until user type bye
-        Scanner scannerObj = new Scanner(System.in);
+//
+//        try {
+//            File taskDb = new File("./data/kuro.txt");
+//            //Scan kuro.txt and initialize taskList
+//            Scanner dbScanner = new Scanner(taskDb);
+//            while (dbScanner.hasNextLine()) {
+//                String data = dbScanner.nextLine();
+//                //todo 
+//            }
+//            dbScanner.close();
+//        } catch (FileNotFoundException e) {
+//            File newDb = new File("./data/kuro.txt");
+//            try {
+//                newDb.createNewFile();
+//            } catch (IOException ex) {
+//                throw new RuntimeException(ex);
+//            }
+//        }
+        ui.welcome();
 
         while (isOperating) {
-            String fullCommand = scannerObj.nextLine().trim();
+            String input = ui.readCommand();
             int index;
             Task newTask;
 
             try {
-                newTask = TaskParser.parse(fullCommand);
+                newTask = TaskParser.parse(input);
             } catch (kuroException e) {
                 System.out.println(e.toString());
                 continue;
@@ -188,69 +196,38 @@ public class Kuro {
             switch (newTask.command) {
             case "bye":
                 isOperating = false;
+                ui.bye();
                 break;
             case "mark":
-                index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
+                index = Integer.parseInt(input.split(" ")[1]) - 1;
                 taskList.get(index).setStatus(true);
-                System.out.printf("""
-                        ____________________________________________________________
-                        Sugoi, I have marked this task as done:
-                        %s
-                        ____________________________________________________________
-                        %n""", taskList.get(index).toString());
+                ui.showMark(taskList.get(index).toString());
                 break;
             case "unmark":
-                index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
+                index = Integer.parseInt(input.split(" ")[1]) - 1;
                 taskList.get(index).setStatus(false);
-                System.out.printf("""
-                        ____________________________________________________________
-                        Hai, I have marked this task as not done yet:
-                        %s
-                        ____________________________________________________________
-                        %n""", taskList.get(index).toString());
+                ui.showUnmark(taskList.get(index).toString());
                 break;
             case "delete":
-                index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
+                index = Integer.parseInt(input.split(" ")[1]) - 1;
                 String taskRemoved = taskList.get(index).toString();
                 taskList.remove(index);
-                System.out.printf("""
-                        ____________________________________________________________
-                        Hai, I have removed this task:
-                        %s
-                        Now, you have %d tasks in the list.
-                        ____________________________________________________________
-                        %n""", taskRemoved, taskList.size());
+                ui.showRemove(taskRemoved, taskList.size());
                 break;
             case "list":
-                StringBuilder listString = new StringBuilder();
-                for (int i = 0; i < taskList.size(); i++) {
-                    listString.append("\n")
-                            .append(i + 1)
-                            .append(". ")
-                            .append(taskList.get(i).toString());
-                }
-                System.out.printf("""
-                        ____________________________________________________________
-                        Douzo,Here are the task in your list:
-                        %s
-                        ____________________________________________________________
-                        %n""", listString);
+                ui.showList(taskList);
                 break;
             default:
                 if (newTask.command.isEmpty()) {
                     break;
                 }
                 taskList.add(newTask);
-                System.out.printf("""
-                        ____________________________________________________________
-                        Wakarimashita, I have added this task:
-                        %s
-                        Now, you have %d tasks in the list.
-                        ____________________________________________________________
-                        %n""", newTask.toString(), taskList.size());
+                ui.showAdd(newTask.toString(), taskList.size());
             }
         }
-        scannerObj.close();
-        System.out.println(Messages.GOODBYE_MESSAGE);
+    }
+
+    public static void main(String[] args) {
+        new Kuro("data/tasks.txt").run();
     }
 }

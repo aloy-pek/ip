@@ -1,4 +1,79 @@
 package kuro.ui;
 
+import java.util.List;
+import java.util.Scanner;
+
+import kuro.constants.Messages;
+
 public class Ui {
+    private final Scanner scanner = new Scanner(System.in);
+
+    public String readCommand() {
+        System.out.print("> ");
+        return scanner.nextLine();
+    }
+
+    public void welcome() {
+        System.out.println(Messages.WELCOME_MESSAGE);
+    }
+
+    public void bye() {
+        System.out.println(Messages.GOODBYE_MESSAGE);
+    }
+
+    public void showMark(String task) {
+        System.out.printf("""
+                        ____________________________________________________________
+                        Sugoi, I have marked this task as done:
+                        %s
+                        ____________________________________________________________
+                        %n""", task);
+    }
+    
+    public void showUnmark(String task) {
+        System.out.printf("""
+                        ____________________________________________________________
+                        Hai, I have marked this task as not done yet:
+                        %s
+                        ____________________________________________________________
+                        %n""", task);
+    }
+    
+    public void showAdd(String task, int numberOfTasks) {
+        System.out.printf("""
+                        ____________________________________________________________
+                        Wakarimashita, I have added this task:
+                        %s
+                        Now, you have %d tasks in the list.
+                        ____________________________________________________________
+                        %n""", task, numberOfTasks);
+    }
+
+    public void showRemove(String task, int numberOfTasks) {
+        System.out.printf("""
+                        ____________________________________________________________
+                        Hai, I have removed this task:
+                        %s
+                        Now, you have %d tasks in the list.
+                        ____________________________________________________________
+                        %n""", task, numberOfTasks);
+    }
+
+    public void showList(List<?> taskList) {
+        StringBuilder listString = new StringBuilder();
+        for (int i = 0; i < taskList.size(); i++) {
+            listString.append("\n")
+                    .append(i + 1)
+                    .append(". ")
+                    .append(taskList.get(i).toString());
+        }
+        System.out.printf("""
+                        ____________________________________________________________
+                        Douzo,Here are the task in your list:
+                        %s
+                        ____________________________________________________________
+                        %n""", listString);
+    }
+    
+    
 }
