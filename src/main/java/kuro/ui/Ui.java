@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import kuro.constants.Messages;
+import kuro.tasks.TaskList;
 
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
@@ -59,7 +60,7 @@ public class Ui {
                         %n""", task, numberOfTasks);
     }
 
-    public void showList(List<?> taskList) {
+    public void showList(TaskList taskList) {
         StringBuilder listString = new StringBuilder();
         for (int i = 0; i < taskList.size(); i++) {
             listString.append("\n")
@@ -73,6 +74,14 @@ public class Ui {
                         %s
                         ____________________________________________________________
                         %n""", listString);
+    }
+
+    public void showError(String message) {
+        System.out.printf("""
+                        ____________________________________________________________
+                        %s
+                        ____________________________________________________________
+                        %n""", message);
     }
     
     

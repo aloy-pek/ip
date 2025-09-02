@@ -7,15 +7,23 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 
+import kuro.exceptions.KuroException;
+import kuro.parser.CommandParser;
+import kuro.tasks.Task;
+import kuro.tasks.TaskList;
 import kuro.ui.Ui;
 
 
 public class Kuro {
-    static List<Task> taskList = new ArrayList<>();
-    private Ui ui;
+    private final TaskList taskList;
+    private final Ui ui;
+    private final CommandParser parser;
 
     public Kuro(String filePath) {
-        ui = new Ui();
+        this.ui = new Ui();
+        this.taskList = new TaskList();
+        this.parser = new CommandParser();
+
 //        storage = new Storage(filePath);
 //        try {
 //            tasks = new TaskList(storage.load());
@@ -25,136 +33,40 @@ public class Kuro {
 //        }
     }
 
-    //class for the task that user typed
-    public static class Task {
-        protected String command;
-        protected boolean isCompleted;
+    public void listTasks() {
+        this.ui.showList(taskList);
+    }
 
-        public Task(String command) {
-            this.command = command;
-            this.isCompleted = false;
-        }
+    public void addTask(Task task) {
+        taskList.addTask(task);
+        ui.showAdd(task.toString(), taskList.getSize());
+    }
 
-        public String getStatus() {
-            return (isCompleted ? "X" : " ");
-        }
-
-        public void setStatus(boolean status) {
-            this.isCompleted = status;
-        }
-
-        @Override
-        public String toString() {
-            return "[" + (isCompleted ? "X" : " ") + "] " + this.command;
+    public void deleteTask(int index) {
+        try {
+            String taskRemoved = taskList.getTask(index).toString();
+            taskList.deleteTask(index);
+            ui.showRemove(taskRemoved, taskList.getSize());
+        } catch (KuroException e) {
+            ui.showError(e.getMessage());
         }
     }
 
-    public static class Todo extends Task {
-        public Todo(String description) {
-            super(description);
-        }
-
-        @Override
-        public String toString() {
-            return "[T]" + super.toString();
+    public void markTaskAsDone(int index) {
+        try {
+            taskList.getTask(index).setStatus(true);
+            ui.showMark(taskList.getTask(index).toString());
+        } catch (KuroException e) {
+            ui.showError(e.getMessage());
         }
     }
 
-    public static class Deadline extends Task {
-        protected String by;
-
-        public Deadline(String description, String by) {
-            super(description);
-            this.by = by;
-        }
-
-        @Override
-        public String toString() {
-            return "[D]" + super.toString() + " (by: " + by + ")";
-        }
-    }
-
-    public static class Event extends Task {
-        protected String start;
-        protected String end;
-
-        public Event(String description, String start, String end) {
-            super(description);
-            this.start = start;
-            this.end = end;
-        }
-
-        @Override
-        public String toString() {
-            return "[E]" + super.toString() + " (From: " + start + " to: " + end + ")";
-        }
-    }
-
-    public static class TaskParser {
-        public static Task parse(String fullCommand) throws kuroException {
-            String command = fullCommand.split(" ")[0].toLowerCase();
-
-            return switch (command) {
-                case "todo" -> parseTodo(fullCommand);
-                case "deadline" -> parseDeadline(fullCommand);
-                case "event" -> parseEvent(fullCommand);
-                case "mark", "unmark", "delete" -> parseMarkUnmarkDelete(fullCommand);
-                case "list", "bye" -> new Task(command); //misc task
-                default -> throw new kuroException("Sumimasen, specified command is not a registered command");
-            };
-        }
-
-        private static Task parseTodo(String fullCommand) throws kuroException {
-            if (fullCommand.length() > 4) {
-                return new Todo(fullCommand.substring(fullCommand.indexOf(" ") + 1));
-            } else {
-                throw new kuroException("Sumimasen, please specify the task description.");
-            }
-        }
-
-        private static Task parseDeadline(String fullCommand) throws kuroException {
-            if (!fullCommand.contains("/by")) {
-                throw new kuroException("Sumimasen, invalid command or format. Please try again.");
-            }
-
-            String description = fullCommand.substring(9, fullCommand.indexOf("/by")).trim();
-            String by = fullCommand.substring(fullCommand.indexOf("/by") + 4).trim();
-            return new Deadline(description, by);
-        }
-
-        private static Task parseEvent(String fullCommand) throws kuroException {
-            if (!fullCommand.contains("/from")
-                    || !fullCommand.contains("/to")
-                    || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")) {
-                throw new kuroException("Sumimasen, invalid command or format. Please try again.");
-            }
-            String description = fullCommand.substring(6, fullCommand.indexOf("/from")).trim();
-            String start = fullCommand.substring(fullCommand.indexOf("/from") + 6, fullCommand.indexOf("/to")).trim();
-            String end = fullCommand.substring(fullCommand.indexOf("/to") + 4).trim();
-            return new Event(description, start, end);
-        }
-
-        private static Task parseMarkUnmarkDelete(String fullCommand) throws kuroException {
-            try {
-                int index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
-                if (index > taskList.size() - 1) {
-                    throw new Exception();
-                }
-                return new Task(fullCommand.split(" ")[0]);
-            } catch (Exception e) {
-                throw new kuroException("Sumimasen, invalid command or format. Please try again.");
-            }
-        }
-    }
-
-    public static class kuroException extends Exception {
-        kuroException(String message) {
-            super(message);
-        }
-
-        @Override
-        public String toString() {
-            return "Error while interacting with Kuro: " + getMessage();
+    public void markTaskAsNotDone(int index) {
+        try {
+            taskList.getTask(index).setStatus(false);
+            ui.showUnmark(taskList.getTask(index).toString());
+        } catch (KuroException e) {
+            ui.showError(e.getMessage());
         }
     }
 
@@ -183,12 +95,11 @@ public class Kuro {
         while (isOperating) {
             String input = ui.readCommand();
             int index;
-            Task newTask;
 
             try {
-                newTask = TaskParser.parse(input);
-            } catch (kuroException e) {
-                System.out.println(e.toString());
+                this.parser.parse(input);
+            } catch (KuroException e) {
+                ui.showError(e.getMessage());
                 continue;
             }
 
@@ -200,29 +111,18 @@ public class Kuro {
                 break;
             case "mark":
                 index = Integer.parseInt(input.split(" ")[1]) - 1;
-                taskList.get(index).setStatus(true);
-                ui.showMark(taskList.get(index).toString());
                 break;
             case "unmark":
                 index = Integer.parseInt(input.split(" ")[1]) - 1;
-                taskList.get(index).setStatus(false);
-                ui.showUnmark(taskList.get(index).toString());
                 break;
             case "delete":
                 index = Integer.parseInt(input.split(" ")[1]) - 1;
-                String taskRemoved = taskList.get(index).toString();
-                taskList.remove(index);
-                ui.showRemove(taskRemoved, taskList.size());
-                break;
-            case "list":
-                ui.showList(taskList);
                 break;
             default:
                 if (newTask.command.isEmpty()) {
                     break;
                 }
-                taskList.add(newTask);
-                ui.showAdd(newTask.toString(), taskList.size());
+
             }
         }
     }
