@@ -9,44 +9,45 @@ import java.io.File;
 
 import kuro.exceptions.KuroException;
 import kuro.parser.CommandParser;
+import kuro.storage.Storage;
 import kuro.tasks.Task;
 import kuro.tasks.TaskList;
 import kuro.ui.Ui;
 
 
 public class Kuro {
-    private final TaskList taskList;
+    private Storage storage;
+    private TaskList tasks;
     private final Ui ui;
     private final CommandParser parser;
 
     public Kuro(String filePath) {
         this.ui = new Ui();
-        this.taskList = new TaskList();
         this.parser = new CommandParser();
+        this.storage = new Storage(filePath);
 
-//        storage = new Storage(filePath);
-//        try {
-//            tasks = new TaskList(storage.load());
-//        } catch (DukeException e) {
-//            ui.showLoadingError();
-//            tasks = new TaskList();
-//        }
+        try {
+            this.tasks = new TaskList(storage.load());
+        } catch (KuroException e) {
+            ui.showError(e.getMessage());
+            this.tasks = new TaskList();
+        }
     }
 
     public void listTasks() {
-        this.ui.showList(taskList);
+        this.ui.showList(tasks);
     }
 
     public void addTask(Task task) {
-        taskList.addTask(task);
-        ui.showAdd(task.toString(), taskList.getSize());
+        tasks.addTask(task);
+        ui.showAdd(task.toString(), tasks.getSize());
     }
 
     public void deleteTask(int index) {
         try {
-            String taskRemoved = taskList.getTask(index).toString();
-            taskList.deleteTask(index);
-            ui.showRemove(taskRemoved, taskList.getSize());
+            String taskRemoved = tasks.getTask(index).toString();
+            tasks.deleteTask(index);
+            ui.showRemove(taskRemoved, tasks.getSize());
         } catch (KuroException e) {
             ui.showError(e.getMessage());
         }
@@ -54,8 +55,8 @@ public class Kuro {
 
     public void markTaskAsDone(int index) {
         try {
-            taskList.getTask(index).setStatus(true);
-            ui.showMark(taskList.getTask(index).toString());
+            tasks.getTask(index).setStatus(true);
+            ui.showMark(tasks.getTask(index).toString());
         } catch (KuroException e) {
             ui.showError(e.getMessage());
         }
@@ -63,8 +64,8 @@ public class Kuro {
 
     public void markTaskAsNotDone(int index) {
         try {
-            taskList.getTask(index).setStatus(false);
-            ui.showUnmark(taskList.getTask(index).toString());
+            tasks.getTask(index).setStatus(false);
+            ui.showUnmark(tasks.getTask(index).toString());
         } catch (KuroException e) {
             ui.showError(e.getMessage());
         }
@@ -72,24 +73,6 @@ public class Kuro {
 
     public void run() {
         boolean isOperating = true;
-//
-//        try {
-//            File taskDb = new File("./data/kuro.txt");
-//            //Scan kuro.txt and initialize taskList
-//            Scanner dbScanner = new Scanner(taskDb);
-//            while (dbScanner.hasNextLine()) {
-//                String data = dbScanner.nextLine();
-//                //todo 
-//            }
-//            dbScanner.close();
-//        } catch (FileNotFoundException e) {
-//            File newDb = new File("./data/kuro.txt");
-//            try {
-//                newDb.createNewFile();
-//            } catch (IOException ex) {
-//                throw new RuntimeException(ex);
-//            }
-//        }
         ui.welcome();
 
         while (isOperating) {
@@ -103,7 +86,6 @@ public class Kuro {
                 ui.showError(e.getMessage());
                 continue;
             }
-
 
             switch (newTask.getCommand()) {
             case "bye":
