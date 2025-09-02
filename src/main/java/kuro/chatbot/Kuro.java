@@ -7,20 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 
+import kuro.constants.Messages;
+
 
 public class Kuro {
-    final static String welcomeMsg = """
-            ____________________________________________________________
-             Konnichiwa! I'm Kuro
-             What can I do for you?
-            ____________________________________________________________
-            """;
-    final static String goodbyeMsg = """
-            ____________________________________________________________
-             Sayonara! Hope to see you again soon!
-            ____________________________________________________________
-            """;
-
     static List<Task> taskList = new ArrayList<>();
 
     //class for the task that user typed
@@ -177,7 +167,7 @@ public class Kuro {
             }
         }
 
-        System.out.println(welcomeMsg);
+        System.out.println(Messages.WELCOME_MESSAGE);
 
         //continue wait for input until user type bye
         Scanner scannerObj = new Scanner(System.in);
@@ -261,6 +251,6 @@ public class Kuro {
             }
         }
         scannerObj.close();
-        System.out.println(goodbyeMsg);
+        System.out.println(Messages.GOODBYE_MESSAGE);
     }
 }
