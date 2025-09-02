@@ -1,3 +1,5 @@
+package kuro.chatbot;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -119,8 +121,8 @@ public class Kuro {
         }
 
         private static Task parseEvent(String fullCommand) throws kuroException {
-            if (!fullCommand.contains("/from") 
-                    || !fullCommand.contains("/to") 
+            if (!fullCommand.contains("/from")
+                    || !fullCommand.contains("/to")
                     || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")) {
                 throw new kuroException("Sumimasen, invalid command or format. Please try again.");
             }
@@ -156,7 +158,7 @@ public class Kuro {
 
     public static void main(String[] args) {
         boolean isOperating = true;
-        
+
         try {
             File taskDb = new File("./data/kuro.txt");
             //Scan kuro.txt and initialize taskList
@@ -174,7 +176,7 @@ public class Kuro {
                 throw new RuntimeException(ex);
             }
         }
-        
+
         System.out.println(welcomeMsg);
 
         //continue wait for input until user type bye
