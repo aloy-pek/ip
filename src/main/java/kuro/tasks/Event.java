@@ -1,16 +1,20 @@
 package kuro.tasks;
 
-public class Event extends Task {
-    protected String start;
-    protected String end;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public Event(String description, String start, String end) {
+public class Event extends Task {
+    protected LocalDateTime start;
+    protected LocalDateTime end;
+
+    public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
         this.start = start;
         this.end = end;
     }
 
-    public Event(String description, String start, String end, boolean isCompleted) {
+    public Event(String description, LocalDateTime start, LocalDateTime end, boolean isCompleted) {
         super(description, isCompleted);
         this.start = start;
         this.end = end;
@@ -23,6 +27,9 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (From: " + start + " to: " + end + ")";
+        return "[E]" + super.toString() + " (From: " 
+                + start.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+                + " to: " 
+                + end.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")) + ")";
     }
 }

@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,12 +48,24 @@ public class Storage {
                     break;
                 case "D":
                     String by = parts[3];
-                    tasks.add(new Deadline(description, by, isDone));
+                    try {
+                        LocalDateTime dateTime = LocalDateTime.parse(by, DateTimeFormatter.ISO_DATE_TIME);
+                        tasks.add(new Deadline(description, dateTime, isDone));
+                    } catch (DateTimeParseException e) {
+                        throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
+                    }
                     break;
                 case "E":
                     String start = parts[3];
                     String end = parts[4];
-                    tasks.add(new Event(description, start, end, isDone));
+                    try {
+                        LocalDateTime startDateTime = LocalDateTime.parse(start, DateTimeFormatter.ISO_DATE_TIME);
+                        LocalDateTime endDateTime = LocalDateTime.parse(end, DateTimeFormatter.ISO_DATE_TIME);
+                        tasks.add(new Event(description, startDateTime, endDateTime, isDone));
+                    } catch (DateTimeParseException e) {
+                        throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
+                    }
+                    
                     break;
                 default:
                     throw new KuroException("Unknown task type in file");

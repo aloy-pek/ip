@@ -1,5 +1,9 @@
 package kuro.parser;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import kuro.tasks.Task;
 import kuro.tasks.Todo;
 import kuro.tasks.Deadline;
@@ -31,25 +35,39 @@ public class CommandParser {
     }
 
     private Task parseDeadline(String fullCommand) throws KuroException {
-        if (!fullCommand.contains("/by")) {
+        if (!fullCommand.contains("/by") || fullCommand.length() < 13) {
             throw new KuroException("Sumimasen, invalid command or format. Please try again.");
         }
 
         String description = fullCommand.substring(9, fullCommand.indexOf("/by")).trim();
         String by = fullCommand.substring(fullCommand.indexOf("/by") + 4).trim();
-        return new Deadline(description, by);
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(by, formatter);
+            return new Deadline(description, dateTime);
+        } catch (DateTimeParseException e) {
+            throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
+        }
     }
 
     private Task parseEvent(String fullCommand) throws KuroException {
         if (!fullCommand.contains("/from")
                 || !fullCommand.contains("/to")
-                || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")) {
+                || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")
+                || fullCommand.length() < 18) {
             throw new KuroException("Sumimasen, invalid command or format. Please try again.");
         }
         String description = fullCommand.substring(6, fullCommand.indexOf("/from")).trim();
         String start = fullCommand.substring(fullCommand.indexOf("/from") + 6, fullCommand.indexOf("/to")).trim();
         String end = fullCommand.substring(fullCommand.indexOf("/to") + 4).trim();
-        return new Event(description, start, end);
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime startDateTime = LocalDateTime.parse(start, formatter);
+            LocalDateTime endDateTime = LocalDateTime.parse(end, formatter);
+            return new Event(description, startDateTime, endDateTime);
+        } catch (DateTimeParseException e) {
+            throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
+        }
     }
 
     private Task parseMarkUnmarkDelete(String fullCommand) throws KuroException {

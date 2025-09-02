@@ -4,10 +4,10 @@ deadline
 event
 deadline Shower
 event Shower
-event project meeting /to Mon 2pm /from 4pm
+event project meeting /to 2022-10-20 20:00 /from 2025-09-20 18:00
 todo Brush Teeth
-deadline Read Book /by 30 August
-event Write Reflection /from 30 August /to 31 August
+deadline Read Book /by 2025-11-31 10:00
+event Write Reflection /from 2025-09-20 18:00 /to 2022-10-20 20:00
 list
 mark
 mark 1
