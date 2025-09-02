@@ -1,6 +1,10 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.io.File;
+
 
 public class Kuro {
     final static String welcomeMsg = """
@@ -152,7 +156,25 @@ public class Kuro {
 
     public static void main(String[] args) {
         boolean isOperating = true;
-
+        
+        try {
+            File taskDb = new File("./data/kuro.txt");
+            //Scan kuro.txt and initialize taskList
+            Scanner dbScanner = new Scanner(taskDb);
+            while (dbScanner.hasNextLine()) {
+                String data = dbScanner.nextLine();
+                //todo 
+            }
+            dbScanner.close();
+        } catch (FileNotFoundException e) {
+            File newDb = new File("./data/kuro.txt");
+            try {
+                newDb.createNewFile();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        
         System.out.println(welcomeMsg);
 
         //continue wait for input until user type bye
