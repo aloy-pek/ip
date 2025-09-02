@@ -7,8 +7,12 @@ import kuro.exceptions.KuroException;
 public class TaskList {
     private ArrayList<Task> tasks;
 
-    public TaskList() {
-        this.tasks = new ArrayList<>();
+    public TaskList(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+    }
+    
+    public ArrayList<Task> getAllTasks() {
+        return tasks;
     }
 
     public void deleteTask(int index) throws KuroException {

@@ -8,6 +8,16 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    public Deadline(String description, String by, boolean isCompleted) {
+        super(description, isCompleted);
+        this.by = by;
+    }
+
+    @Override
+    public String toSaveFormat() {
+        return String.format("D | %d | %s | %s", isCompleted ? 1 : 0, command, by);
+    }
+    
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
