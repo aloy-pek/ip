@@ -10,8 +10,13 @@ public class Task {
     }
 
     public String getStatus() {
-        return (isCompleted ? "X" : " ");
+        return (this.isCompleted ? "X" : " ");
     }
+
+    public String getCommand() {
+        return this.command;
+    }
+
 
     public void setStatus(boolean status) {
         this.isCompleted = status;

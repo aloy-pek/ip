@@ -1,6 +1,5 @@
 package kuro.parser;
 
-import kuro.chatbot.Kuro;
 import kuro.tasks.Task;
 import kuro.tasks.Todo;
 import kuro.tasks.Deadline;
@@ -9,7 +8,8 @@ import kuro.exceptions.KuroException;
 
 
 public class CommandParser {
-    public static Task parse(String fullCommand) throws KuroException {
+    
+    public Task parse(String fullCommand) throws KuroException {
         String command = fullCommand.split(" ")[0].toLowerCase();
 
         return switch (command) {
@@ -22,7 +22,7 @@ public class CommandParser {
         };
     }
 
-    private static Task parseTodo(String fullCommand) throws KuroException {
+    private Task parseTodo(String fullCommand) throws KuroException {
         if (fullCommand.length() > 4) {
             return new Todo(fullCommand.substring(fullCommand.indexOf(" ") + 1));
         } else {
@@ -30,7 +30,7 @@ public class CommandParser {
         }
     }
 
-    private static Task parseDeadline(String fullCommand) throws KuroException {
+    private Task parseDeadline(String fullCommand) throws KuroException {
         if (!fullCommand.contains("/by")) {
             throw new KuroException("Sumimasen, invalid command or format. Please try again.");
         }
@@ -40,7 +40,7 @@ public class CommandParser {
         return new Deadline(description, by);
     }
 
-    private static Task parseEvent(String fullCommand) throws KuroException {
+    private Task parseEvent(String fullCommand) throws KuroException {
         if (!fullCommand.contains("/from")
                 || !fullCommand.contains("/to")
                 || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")) {
@@ -52,16 +52,14 @@ public class CommandParser {
         return new Event(description, start, end);
     }
 
-    private static Task parseMarkUnmarkDelete(String fullCommand) throws KuroException {
+    private Task parseMarkUnmarkDelete(String fullCommand) throws KuroException {
         try {
-            int index = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
-            if (index > taskList.size() - 1) {
-                throw new Exception();
+            if (fullCommand.split(" ").length < 2) {
+                throw new KuroException("Sumimasen, invalid command or format. Please try again.");
             }
             return new Task(fullCommand.split(" ")[0]);
         } catch (Exception e) {
             throw new KuroException("Sumimasen, invalid command or format. Please try again.");
         }
     }
-}
 }

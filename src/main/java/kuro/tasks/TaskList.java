@@ -12,7 +12,7 @@ public class TaskList {
     }
 
     public void deleteTask(int index) throws KuroException {
-        if (index < 0 || index > this.tasks.size()) {
+        if (index < 0 || index > this.tasks.size() - 1) {
             throw new KuroException("Index out of bounds");
         }
         this.tasks.remove(index);
@@ -27,9 +27,21 @@ public class TaskList {
     }
 
     public Task getTask(int index) throws KuroException {
-        if (index < 0 || index > this.tasks.size()) {
+        if (index < 0 || index > this.tasks.size() - 1) {
             throw new KuroException("Index out of bounds");
         }
         return this.tasks.get(index);
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder listString = new StringBuilder();
+        for (int i = 0; i < this.tasks.size(); i++) {
+            listString.append("\n")
+                    .append(i + 1)
+                    .append(". ")
+                    .append(tasks.get(i).toString());
+        }
+        return listString.toString();
     }
 }

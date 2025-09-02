@@ -94,35 +94,42 @@ public class Kuro {
 
         while (isOperating) {
             String input = ui.readCommand();
+            Task newTask;
             int index;
 
             try {
-                this.parser.parse(input);
+                newTask = this.parser.parse(input);
             } catch (KuroException e) {
                 ui.showError(e.getMessage());
                 continue;
             }
 
 
-            switch (newTask.command) {
+            switch (newTask.getCommand()) {
             case "bye":
                 isOperating = false;
                 ui.bye();
                 break;
             case "mark":
                 index = Integer.parseInt(input.split(" ")[1]) - 1;
+                this.markTaskAsDone(index);
                 break;
             case "unmark":
                 index = Integer.parseInt(input.split(" ")[1]) - 1;
+                this.markTaskAsNotDone(index);
                 break;
             case "delete":
                 index = Integer.parseInt(input.split(" ")[1]) - 1;
+                this.deleteTask(index);
+                break;
+            case "list":
+                this.listTasks();
                 break;
             default:
-                if (newTask.command.isEmpty()) {
+                if (newTask.getCommand().isEmpty()) {
                     break;
                 }
-
+                this.addTask(newTask);
             }
         }
     }

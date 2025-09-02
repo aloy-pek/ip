@@ -10,7 +10,7 @@ public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
     public String readCommand() {
-        System.out.print("> ");
+        System.out.printf(">%n");
         return scanner.nextLine();
     }
 
@@ -61,25 +61,18 @@ public class Ui {
     }
 
     public void showList(TaskList taskList) {
-        StringBuilder listString = new StringBuilder();
-        for (int i = 0; i < taskList.size(); i++) {
-            listString.append("\n")
-                    .append(i + 1)
-                    .append(". ")
-                    .append(taskList.get(i).toString());
-        }
         System.out.printf("""
                         ____________________________________________________________
                         Douzo,Here are the task in your list:
                         %s
                         ____________________________________________________________
-                        %n""", listString);
+                        %n""", taskList.toString());
     }
 
     public void showError(String message) {
         System.out.printf("""
                         ____________________________________________________________
-                        %s
+                        Error while interacting with Kuro: %s
                         ____________________________________________________________
                         %n""", message);
     }
