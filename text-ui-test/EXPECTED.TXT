@@ -3,31 +3,63 @@ ____________________________________________________________
  What can I do for you?
 ____________________________________________________________
 
+>
+____________________________________________________________
 Error while interacting with Kuro: Sumimasen, specified command is not a registered command
+____________________________________________________________
+
+>
+____________________________________________________________
 Error while interacting with Kuro: Sumimasen, please specify the task description.
+____________________________________________________________
+
+>
+____________________________________________________________
 Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
+____________________________________________________________
 Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
+____________________________________________________________
 Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
+____________________________________________________________
 Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
+____________________________________________________________
 Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
 ____________________________________________________________
 Wakarimashita, I have added this task:
 [T][ ] Brush Teeth
 Now, you have 1 tasks in the list.
 ____________________________________________________________
 
+>
 ____________________________________________________________
 Wakarimashita, I have added this task:
 [D][ ] Read Book (by: 30 August)
 Now, you have 2 tasks in the list.
 ____________________________________________________________
 
+>
 ____________________________________________________________
 Wakarimashita, I have added this task:
 [E][ ] Write Reflection (From: 30 August to: 31 August)
 Now, you have 3 tasks in the list.
 ____________________________________________________________
 
+>
 ____________________________________________________________
 Douzo,Here are the task in your list:
 
@@ -36,28 +68,41 @@ Douzo,Here are the task in your list:
 3. [E][ ] Write Reflection (From: 30 August to: 31 August)
 ____________________________________________________________
 
+>
+____________________________________________________________
 Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
 ____________________________________________________________
 Sugoi, I have marked this task as done:
 [T][X] Brush Teeth
 ____________________________________________________________
 
+>
 ____________________________________________________________
 Sugoi, I have marked this task as done:
 [D][X] Read Book (by: 30 August)
 ____________________________________________________________
 
+>
 ____________________________________________________________
 Sugoi, I have marked this task as done:
 [E][X] Write Reflection (From: 30 August to: 31 August)
 ____________________________________________________________
 
-Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+>
+____________________________________________________________
+Error while interacting with Kuro: Index out of bounds
+____________________________________________________________
+
+>
 ____________________________________________________________
 Hai, I have marked this task as not done yet:
 [E][ ] Write Reflection (From: 30 August to: 31 August)
 ____________________________________________________________
 
+>
 ____________________________________________________________
 Douzo,Here are the task in your list:
 
@@ -66,13 +111,19 @@ Douzo,Here are the task in your list:
 3. [E][ ] Write Reflection (From: 30 August to: 31 August)
 ____________________________________________________________
 
-Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+>
+____________________________________________________________
+Error while interacting with Kuro: Index out of bounds
+____________________________________________________________
+
+>
 ____________________________________________________________
 Hai, I have removed this task:
 [E][ ] Write Reflection (From: 30 August to: 31 August)
 Now, you have 2 tasks in the list.
 ____________________________________________________________
 
+>
 ____________________________________________________________
 Douzo,Here are the task in your list:
 
@@ -80,6 +131,8 @@ Douzo,Here are the task in your list:
 2. [D][X] Read Book (by: 30 August)
 ____________________________________________________________
 
+>
 ____________________________________________________________
  Sayonara! Hope to see you again soon!
 ____________________________________________________________
+
