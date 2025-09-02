@@ -30,7 +30,9 @@ public class Kuro {
             this.tasks = new TaskList(storage.load());
         } catch (KuroException e) {
             ui.showError(e.getMessage());
-            this.tasks = new TaskList();
+            this.tasks = new TaskList(new ArrayList<Task>());
+        } catch (IOException e) {
+            ui.showError("Error Loading File");
         }
     }
 
@@ -90,6 +92,11 @@ public class Kuro {
             switch (newTask.getCommand()) {
             case "bye":
                 isOperating = false;
+                try {
+                    storage.save(tasks.getAllTasks());
+                } catch (IOException e) {
+                    ui.showError("Error saving data");
+                }
                 ui.bye();
                 break;
             case "mark":
@@ -117,6 +124,6 @@ public class Kuro {
     }
 
     public static void main(String[] args) {
-        new Kuro("data/tasks.txt").run();
+        new Kuro("./data/kuro.txt").run();
     }
 }

@@ -9,6 +9,11 @@ public class Task {
         this.isCompleted = false;
     }
 
+    public Task(String command, boolean isCompleted) {
+        this.command = command;
+        this.isCompleted = isCompleted;
+    }
+
     public String getStatus() {
         return (this.isCompleted ? "X" : " ");
     }
@@ -16,10 +21,13 @@ public class Task {
     public String getCommand() {
         return this.command;
     }
-
-
+    
     public void setStatus(boolean status) {
         this.isCompleted = status;
+    }
+
+    public String toSaveFormat() {
+        return String.format("T | %d | %s", isCompleted ? 1 : 0, command);
     }
 
     @Override
