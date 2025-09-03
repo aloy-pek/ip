@@ -20,7 +20,7 @@ public class CommandParser {
             case "todo" -> parseTodo(fullCommand);
             case "deadline" -> parseDeadline(fullCommand);
             case "event" -> parseEvent(fullCommand);
-            case "mark", "unmark", "delete" -> parseMarkUnmarkDelete(fullCommand);
+            case "mark", "unmark", "delete", "find" -> parseMarkUnmarkDeleteFind(fullCommand);
             case "list", "bye" -> new Task(command); //misc task
             default -> throw new KuroException("Sumimasen, specified command is not a registered command");
         };
@@ -70,7 +70,7 @@ public class CommandParser {
         }
     }
 
-    private Task parseMarkUnmarkDelete(String fullCommand) throws KuroException {
+    private Task parseMarkUnmarkDeleteFind(String fullCommand) throws KuroException {
         try {
             if (fullCommand.split(" ").length < 2) {
                 throw new KuroException("Sumimasen, invalid command or format. Please try again.");
@@ -80,4 +80,5 @@ public class CommandParser {
             throw new KuroException("Sumimasen, invalid command or format. Please try again.");
         }
     }
+    
 }

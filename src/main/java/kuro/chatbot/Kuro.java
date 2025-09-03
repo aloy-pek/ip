@@ -73,6 +73,15 @@ public class Kuro {
         }
     }
 
+    public void filterTaskList(String searchString) {
+        try {
+            TaskList filteredList = this.tasks.filterTask(searchString);
+            ui.showFilteredList(filteredList);
+        } catch (KuroException e) {
+            ui.showError(e.getMessage());
+        }
+    }
+
     public void run() {
         boolean isOperating = true;
         ui.welcome();
@@ -98,6 +107,10 @@ public class Kuro {
                     ui.showError("Error saving data");
                 }
                 ui.bye();
+                break;
+            case "find":
+                String searchString = input.split(" ")[1];
+                this.filterTaskList(searchString);
                 break;
             case "mark":
                 index = Integer.parseInt(input.split(" ")[1]) - 1;

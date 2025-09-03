@@ -69,6 +69,15 @@ public class Ui {
                         %n""", taskList.toString());
     }
 
+    public void showFilteredList(TaskList taskList) {
+        System.out.printf("""
+                        ____________________________________________________________
+                        Douzo,Here are the matching tasks in your list:
+                        %s
+                        ____________________________________________________________
+                        %n""", taskList.toString());
+    }
+
     public void showError(String message) {
         System.out.printf("""
                         ____________________________________________________________
