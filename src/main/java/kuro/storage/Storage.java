@@ -27,11 +27,11 @@ public class Storage {
 
     public ArrayList<Task> load() throws IOException, KuroException {
         ArrayList<Task> tasks = new ArrayList<Task>();
-        
+
         if (!Files.exists(filepath)) {
             Files.createDirectories(filepath.getParent());
             Files.createFile(filepath);
-            return tasks; 
+            return tasks;
         }
         try (Scanner sc = new Scanner(filepath.toFile())) {
             while (sc.hasNextLine()) {
@@ -65,7 +65,7 @@ public class Storage {
                     } catch (DateTimeParseException e) {
                         throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
                     }
-                    
+
                     break;
                 default:
                     throw new KuroException("Unknown task type in file");
@@ -80,7 +80,7 @@ public class Storage {
 
 
     public void save(ArrayList<Task> tasks) throws IOException {
-        Files.createDirectories(filepath.getParent()); 
+        Files.createDirectories(filepath.getParent());
         try (BufferedWriter writer = Files.newBufferedWriter(filepath)) {
             for (Task task : tasks) {
                 writer.write(task.toSaveFormat());
@@ -89,7 +89,7 @@ public class Storage {
         }
         System.out.println(filepath.toString());
     }
-    
+
 //    try {
 //            File taskDb = new File("./data/kuro.txt");
 //            //Scan kuro.txt and initialize taskList

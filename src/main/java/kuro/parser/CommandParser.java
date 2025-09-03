@@ -12,7 +12,7 @@ import kuro.exceptions.KuroException;
 
 
 public class CommandParser {
-    
+
     public Task parse(String fullCommand) throws KuroException {
         String command = fullCommand.split(" ")[0].toLowerCase();
 

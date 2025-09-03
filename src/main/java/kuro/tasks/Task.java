@@ -21,7 +21,7 @@ public class Task {
     public String getCommand() {
         return this.command;
     }
-    
+
     public void setStatus(boolean status) {
         this.isCompleted = status;
     }
