@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import kuro.tasks.Task;
-import kuro.tasks.Todo;
+import kuro.exceptions.KuroException;
 import kuro.tasks.Deadline;
 import kuro.tasks.Event;
-import kuro.exceptions.KuroException;
+import kuro.tasks.Task;
+import kuro.tasks.Todo;
 
 /**
  * A class that parse users' input and create the task.
@@ -25,14 +25,20 @@ public class CommandParser {
     public Task parse(String fullCommand) throws KuroException {
         String command = fullCommand.split(" ")[0].toLowerCase();
 
-        return switch (command) {
-            case "todo" -> parseTodo(fullCommand);
-            case "deadline" -> parseDeadline(fullCommand);
-            case "event" -> parseEvent(fullCommand);
-            case "mark", "unmark", "delete", "find" -> parseMarkUnmarkDeleteFind(fullCommand);
-            case "list", "bye" -> new Task(command); //misc task
-            default -> throw new KuroException("Sumimasen, specified command is not a registered command");
-        };
+        switch (command) {
+        case "todo":
+            return parseTodo(fullCommand);
+        case "deadline":
+            return parseDeadline(fullCommand);
+        case "event":
+            return parseEvent(fullCommand);
+        case "mark", "unmark", "delete", "find":
+            return parseMarkUnmarkDeleteFind(fullCommand);
+        case "list", "bye":
+            return new Task(command); //misc task
+        default:
+            throw new KuroException("Sumimasen, specified command is not a registered command");
+        }
     }
 
     private Task parseTodo(String fullCommand) throws KuroException {
@@ -89,5 +95,5 @@ public class CommandParser {
             throw new KuroException("Sumimasen, invalid command or format. Please try again.");
         }
     }
-    
+
 }

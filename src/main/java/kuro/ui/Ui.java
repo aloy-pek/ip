@@ -1,14 +1,21 @@
 package kuro.ui;
 
-import java.util.List;
 import java.util.Scanner;
 
 import kuro.constants.Messages;
 import kuro.tasks.TaskList;
 
+/**
+ * Ui class that handles the interaction with the user through CLI
+ */
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Return the String that user type using scanner.
+     *
+     * @return String the string that user type in CLI.
+     */
     public String readCommand() {
         System.out.printf(">%n");
         return scanner.nextLine();
@@ -55,11 +62,11 @@ public class Ui {
                 ____________________________________________________________
                 %n""", task);
     }
-    
+
     /**
      * Prints the add Task command message.
      *
-     * @param task The String representation of task that was added.
+     * @param task          The String representation of task that was added.
      * @param numberOfTasks The integer showing the number of task in taskList.
      */
     public void showAdd(String task, int numberOfTasks) {
@@ -75,7 +82,7 @@ public class Ui {
     /**
      * Prints the remove Task command message.
      *
-     * @param task The String representation of task that was removed.
+     * @param task          The String representation of task that was removed.
      * @param numberOfTasks The integer showing the number of task left in taskList.
      */
     public void showRemove(String task, int numberOfTasks) {
@@ -109,11 +116,11 @@ public class Ui {
      */
     public void showFilteredList(TaskList taskList) {
         System.out.printf("""
-                        ____________________________________________________________
-                        Douzo,Here are the matching tasks in your list:
-                        %s
-                        ____________________________________________________________
-                        %n""", taskList.toString());
+                ____________________________________________________________
+                Douzo,Here are the matching tasks in your list:
+                %s
+                ____________________________________________________________
+                %n""", taskList.toString());
     }
 
     /**

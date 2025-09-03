@@ -9,11 +9,17 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
     protected LocalDateTime by;
 
+    /**
+     * Constructor for Deadline class
+     */
     public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
 
+    /**
+     * Constructor for Deadline class
+     */
     public Deadline(String description, LocalDateTime by, boolean isCompleted) {
         super(description, isCompleted);
         this.by = by;

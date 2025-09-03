@@ -1,13 +1,13 @@
 package kuro.parser;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import org.junit.jupiter.api.Test;
 
 import kuro.exceptions.KuroException;
 import kuro.tasks.Deadline;
@@ -48,9 +48,7 @@ public class CommandParserTest {
     }
 
     @Test
-    public void commandParsing_invalidList() throws KuroException {
-        assertThrows(KuroException.class, () -> {
-            Task expected = parser.parse("lis");
-        });
+    public void commandParsing_invalidList() {
+        assertThrows(KuroException.class, () -> parser.parse("lis"));
     }
 }

@@ -3,7 +3,9 @@ package kuro.tasks;
 import java.util.ArrayList;
 
 import kuro.exceptions.KuroException;
-
+/**
+ * Class to store all the task that user inputted.
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
 
@@ -16,7 +18,7 @@ public class TaskList {
     }
 
     /**
-     * Removes task of given index from taskList. 
+     * Removes task of given index from taskList.
      *
      * @param index Index of task to be removed.
      * @throws KuroException If index is out of bound.
@@ -29,7 +31,7 @@ public class TaskList {
     }
 
     /**
-     * Adds task to taskList. 
+     * Adds task to taskList.
      *
      * @param task Task to be added.
      */
@@ -70,14 +72,14 @@ public class TaskList {
         for (Task task : this.tasks) {
             if (task.getCommand().toLowerCase().contains(searchString.toLowerCase())) {
                 filteredList.addTask(task);
-            }  
+            }
         }
         if (filteredList.getSize() == 0) {
             throw new KuroException("No task matched the keyword");
         }
         return filteredList;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder listString = new StringBuilder();

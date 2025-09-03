@@ -7,11 +7,17 @@ public class Task {
     protected String command;
     protected boolean isCompleted;
 
+    /**
+     * Constructor for Task class.
+     */
     public Task(String command) {
         this.command = command;
         this.isCompleted = false;
     }
 
+    /**
+     * Constructor for Task class.
+     */
     public Task(String command, boolean isCompleted) {
         this.command = command;
         this.isCompleted = isCompleted;
@@ -19,7 +25,7 @@ public class Task {
 
     /**
      * Returns a String that represent the completeness of Task.
-     * 
+     *
      * @return String "X" for completed and " " for incomplete Task.
      */
     public String getStatus() {
@@ -36,7 +42,7 @@ public class Task {
 
     /**
      * Returns the formatted string to be saved in database.
-     * 
+     *
      * @return Formatted string of Task.
      */
     public String toSaveFormat() {

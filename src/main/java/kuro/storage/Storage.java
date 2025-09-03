@@ -30,8 +30,8 @@ public class Storage {
     /**
      * Returns an ArrayList of Task that is created from loaded file.
      * Create file and filepath if it did not exist and return an empty ArrayList.
-     * 
-     * @return ArrayList<Task>.
+     *
+     * @return ArrayList of task.
      * @throws IOException If file or directory cannot be created.
      * @throws KuroException If Scanner cannot be created.
      */
@@ -47,8 +47,7 @@ public class Storage {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 String[] parts = line.split(" \\| ");
-
-                String type = parts[0];      // T/D/E
+                String type = parts[0];
                 boolean isDone = parts[1].equals("1");
                 String description = parts[2];
 

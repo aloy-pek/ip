@@ -1,6 +1,5 @@
 package kuro.tasks;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,12 +10,17 @@ public class Event extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;
 
+    /**
+     * Constructor for Event class.
+     */
     public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
         this.start = start;
         this.end = end;
     }
-
+    /**
+     * Constructor for Event class.
+     */
     public Event(String description, LocalDateTime start, LocalDateTime end, boolean isCompleted) {
         super(description, isCompleted);
         this.start = start;

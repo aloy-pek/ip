@@ -1,11 +1,7 @@
 package kuro.chatbot;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.io.File;
 
 import kuro.exceptions.KuroException;
 import kuro.parser.CommandParser;
@@ -23,6 +19,11 @@ public class Kuro {
     private final Ui ui;
     private final CommandParser parser;
 
+    /**
+     * Kuro class constructor
+     *
+     * @param filePath the filepath of the text file that stored data of taskList
+     */
     public Kuro(String filePath) {
         this.ui = new Ui();
         this.parser = new CommandParser();
@@ -55,7 +56,7 @@ public class Kuro {
         tasks.addTask(task);
         ui.showAdd(task.toString(), tasks.getSize());
     }
-    
+
     /**
      * Get specific task from tasks and call tasks to delete it.
      * Sends task string representation and length of tasks to ui to print delete task message.
@@ -86,7 +87,7 @@ public class Kuro {
             ui.showError(e.getMessage());
         }
     }
-    
+
     /**
      * Get specific task from tasks and call tasks to unmark it.
      * Sends task string representation to ui to print unmark task message.
@@ -118,7 +119,7 @@ public class Kuro {
     }
 
     /**
-     *  Runs the kuro chatbot
+     * Runs the kuro chatbot
      *
      */
     public void run() {
