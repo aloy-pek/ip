@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A class that inherit from Task that has additional information on start and end dates.
+ */
 public class Event extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;

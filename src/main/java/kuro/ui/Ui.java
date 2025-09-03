@@ -14,14 +14,25 @@ public class Ui {
         return scanner.nextLine();
     }
 
+    /**
+     * Prints the welcome message.
+     */
     public void welcome() {
         System.out.println(Messages.WELCOME_MESSAGE);
     }
 
+    /**
+     * Prints the goodbye message.
+     */
     public void bye() {
         System.out.println(Messages.GOODBYE_MESSAGE);
     }
 
+    /**
+     * Prints the marking command message.
+     *
+     * @param task The String representation of task that was marked.
+     */
     public void showMark(String task) {
         System.out.printf("""
                         ____________________________________________________________
@@ -31,6 +42,11 @@ public class Ui {
                         %n""", task);
     }
     
+    /**
+     * Prints the unmarking command message.
+     *
+     * @param task The String representation of task that was unmarked.
+     */
     public void showUnmark(String task) {
         System.out.printf("""
                         ____________________________________________________________
@@ -40,6 +56,12 @@ public class Ui {
                         %n""", task);
     }
     
+    /**
+     * Prints the add Task command message.
+     *
+     * @param task The String representation of task that was added.
+     * @param numberOfTasks The integer showing the number of task in taskList.
+     */
     public void showAdd(String task, int numberOfTasks) {
         System.out.printf("""
                         ____________________________________________________________
@@ -50,6 +72,12 @@ public class Ui {
                         %n""", task, numberOfTasks);
     }
 
+    /**
+     * Prints the remove Task command message.
+     *
+     * @param task The String representation of task that was removed.
+     * @param numberOfTasks The integer showing the number of task left in taskList.
+     */
     public void showRemove(String task, int numberOfTasks) {
         System.out.printf("""
                         ____________________________________________________________
@@ -60,6 +88,11 @@ public class Ui {
                         %n""", task, numberOfTasks);
     }
 
+    /**
+     * Prints the list command message.
+     *
+     * @param taskList The TaskList at its current state.
+     */
     public void showList(TaskList taskList) {
         System.out.printf("""
                         ____________________________________________________________
@@ -69,6 +102,11 @@ public class Ui {
                         %n""", taskList.toString());
     }
 
+    /**
+     * Prints the error message.
+     *
+     * @param message The error message to be shown.
+     */
     public void showError(String message) {
         System.out.printf("""
                         ____________________________________________________________
@@ -76,6 +114,4 @@ public class Ui {
                         ____________________________________________________________
                         %n""", message);
     }
-    
-    
 }

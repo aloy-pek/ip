@@ -3,6 +3,9 @@ package kuro.tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A class that inherit from Task that has additional deadline information.
+ */
 public class Deadline extends Task {
     protected LocalDateTime by;
 

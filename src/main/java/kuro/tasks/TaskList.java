@@ -15,6 +15,12 @@ public class TaskList {
         return tasks;
     }
 
+    /**
+     * Removes task of given index from taskList. 
+     *
+     * @param index Index of task to be removed.
+     * @throws KuroException If index is out of bound.
+     */
     public void deleteTask(int index) throws KuroException {
         if (index < 0 || index > this.tasks.size() - 1) {
             throw new KuroException("Index out of bounds");
@@ -22,14 +28,30 @@ public class TaskList {
         this.tasks.remove(index);
     }
 
+    /**
+     * Adds task to taskList. 
+     *
+     * @param task Task to be added.
+     */
     public void addTask(Task task) {
         this.tasks.add(task);
     }
 
+    /**
+     * Returns the size of taskList.
+     *
+     * @return integer representing the length of taskList
+     */
     public int getSize() {
         return this.tasks.size();
     }
 
+    /**
+     * Returns the task in taskList with given index.
+     *
+     * @return Task of that index.
+     * @throws KuroException If the index is out of bound.
+     */
     public Task getTask(int index) throws KuroException {
         if (index < 0 || index > this.tasks.size() - 1) {
             throw new KuroException("Index out of bounds");

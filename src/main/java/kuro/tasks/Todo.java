@@ -1,5 +1,8 @@
 package kuro.tasks;
 
+/**
+ * A class that inherit from Task that has no additional information
+ */
 public class Todo extends Task {
     public Todo(String description) {
         super(description);

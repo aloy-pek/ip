@@ -14,7 +14,9 @@ import kuro.tasks.Task;
 import kuro.tasks.TaskList;
 import kuro.ui.Ui;
 
-
+/**
+ * Main class of the chatbot: Kuro.
+ */
 public class Kuro {
     private Storage storage;
     private TaskList tasks;
@@ -36,15 +38,30 @@ public class Kuro {
         }
     }
 
+    /**
+     * Sends task to be shown to ui to print out the list of tasks.
+     */
     public void listTasks() {
         this.ui.showList(tasks);
     }
 
+    /**
+     * Sends new task to added to tasks.
+     * Sends task string representation and length of tasks to ui to print add task message.
+     *
+     * @param task new Task to be added
+     */
     public void addTask(Task task) {
         tasks.addTask(task);
         ui.showAdd(task.toString(), tasks.getSize());
     }
-
+    
+    /**
+     * Get specific task from tasks and call tasks to delete it.
+     * Sends task string representation and length of tasks to ui to print delete task message.
+     *
+     * @param index The index of task to be deleted
+     */
     public void deleteTask(int index) {
         try {
             String taskRemoved = tasks.getTask(index).toString();
@@ -55,6 +72,12 @@ public class Kuro {
         }
     }
 
+    /**
+     * Get specific task from tasks and call tasks to mark it.
+     * Sends task string representation to ui to print mark task message.
+     *
+     * @param index The index of task to be marked
+     */
     public void markTaskAsDone(int index) {
         try {
             tasks.getTask(index).setStatus(true);
@@ -63,7 +86,13 @@ public class Kuro {
             ui.showError(e.getMessage());
         }
     }
-
+    
+    /**
+     * Get specific task from tasks and call tasks to unmark it.
+     * Sends task string representation to ui to print unmark task message.
+     *
+     * @param index The index of task to be unmarked
+     */
     public void markTaskAsNotDone(int index) {
         try {
             tasks.getTask(index).setStatus(false);
@@ -72,7 +101,11 @@ public class Kuro {
             ui.showError(e.getMessage());
         }
     }
-
+    
+    /**
+     *  Runs the kuro chatbot
+     *
+     */
     public void run() {
         boolean isOperating = true;
         ui.welcome();

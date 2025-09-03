@@ -17,7 +17,9 @@ import kuro.tasks.Deadline;
 import kuro.tasks.Event;
 import kuro.tasks.Task;
 import kuro.tasks.Todo;
-
+/**
+ * A class that manage the storage of taskList.
+ */
 public class Storage {
     private final Path filepath;
 
@@ -25,13 +27,21 @@ public class Storage {
         this.filepath = Paths.get(filepath);
     }
 
+    /**
+     * Returns an ArrayList of Task that is created from loaded file.
+     * Create file and filepath if it did not exist and return an empty ArrayList.
+     * 
+     * @return ArrayList<Task>.
+     * @throws IOException If file or directory cannot be created.
+     * @throws KuroException If Scanner cannot be created.
+     */
     public ArrayList<Task> load() throws IOException, KuroException {
         ArrayList<Task> tasks = new ArrayList<Task>();
-        
+
         if (!Files.exists(filepath)) {
             Files.createDirectories(filepath.getParent());
             Files.createFile(filepath);
-            return tasks; 
+            return tasks;
         }
         try (Scanner sc = new Scanner(filepath.toFile())) {
             while (sc.hasNextLine()) {
@@ -65,7 +75,7 @@ public class Storage {
                     } catch (DateTimeParseException e) {
                         throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
                     }
-                    
+
                     break;
                 default:
                     throw new KuroException("Unknown task type in file");
@@ -78,9 +88,14 @@ public class Storage {
         return tasks;
     }
 
-
+    /**
+     * Saves current taskList into local txt file.
+     *
+     * @param tasks ArrayList of Task.
+     * @throws IOException If the file cannot be modified.
+     */
     public void save(ArrayList<Task> tasks) throws IOException {
-        Files.createDirectories(filepath.getParent()); 
+        Files.createDirectories(filepath.getParent());
         try (BufferedWriter writer = Files.newBufferedWriter(filepath)) {
             for (Task task : tasks) {
                 writer.write(task.toSaveFormat());
@@ -90,21 +105,4 @@ public class Storage {
         System.out.println(filepath.toString());
     }
     
-//    try {
-//            File taskDb = new File("./data/kuro.txt");
-//            //Scan kuro.txt and initialize taskList
-//            Scanner dbScanner = new Scanner(taskDb);
-//            while (dbScanner.hasNextLine()) {
-//                String data = dbScanner.nextLine();
-//                //todo 
-//            }
-//            dbScanner.close();
-//        } catch (FileNotFoundException e) {
-//            File newDb = new File("./data/kuro.txt");
-//            try {
-//                newDb.createNewFile();
-//            } catch (IOException ex) {
-//                throw new RuntimeException(ex);
-//            }
-//        }
 }

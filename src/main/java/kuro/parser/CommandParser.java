@@ -10,9 +10,18 @@ import kuro.tasks.Deadline;
 import kuro.tasks.Event;
 import kuro.exceptions.KuroException;
 
-
+/**
+ * A class that parse users' input and create the task.
+ */
 public class CommandParser {
-    
+
+    /**
+     * Returns the created Task from parsing user input
+     *
+     * @param fullCommand The String that user input in CLI.
+     * @return A specific task depending on input.
+     * @throws KuroException If user command is not a valid command.
+     */
     public Task parse(String fullCommand) throws KuroException {
         String command = fullCommand.split(" ")[0].toLowerCase();
 

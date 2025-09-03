@@ -1,5 +1,8 @@
 package kuro.exceptions;
 
+/**
+ * A specific exception for kuro.
+ */
 public class KuroException extends Exception {
         public KuroException(String message) {
             super(message);

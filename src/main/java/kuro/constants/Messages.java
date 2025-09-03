@@ -1,5 +1,8 @@
 package kuro.constants;
 
+/**
+ * A class that has all the constant messages.
+ */
 public class Messages {
     public static final String WELCOME_MESSAGE = """
             ____________________________________________________________
