@@ -34,6 +34,7 @@ application {
 shadowJar {
     archiveBaseName = "kuro"
     archiveClassifier = null
+    archiveFileName = 'Kuro.jar'
 }
 
 run{
