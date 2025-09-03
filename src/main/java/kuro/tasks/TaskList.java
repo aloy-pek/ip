@@ -59,6 +59,25 @@ public class TaskList {
         return this.tasks.get(index);
     }
 
+    /**
+     * Returns the filtered taskList with the given searchString and is case insensitive.
+     *
+     * @return TaskList that contains searchString.
+     * @throws KuroException If searchString cannot be found in taskList.
+     */
+    public TaskList filterTask(String searchString) throws KuroException {
+        TaskList filteredList = new TaskList(new ArrayList<Task>());
+        for (Task task : this.tasks) {
+            if (task.getCommand().toLowerCase().contains(searchString.toLowerCase())) {
+                filteredList.addTask(task);
+            }  
+        }
+        if (filteredList.getSize() == 0) {
+            throw new KuroException("No task matched the keyword");
+        }
+        return filteredList;
+    }
+    
     @Override
     public String toString() {
         StringBuilder listString = new StringBuilder();

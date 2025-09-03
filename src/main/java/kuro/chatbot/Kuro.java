@@ -101,7 +101,22 @@ public class Kuro {
             ui.showError(e.getMessage());
         }
     }
-    
+
+    /**
+     * Get filtered taskList from tasks.
+     * Sends filtered taskList to ui to print find task message.
+     *
+     * @param searchString The keyword to be searched.
+     */
+    public void filterTaskList(String searchString) {
+        try {
+            TaskList filteredList = this.tasks.filterTask(searchString);
+            ui.showFilteredList(filteredList);
+        } catch (KuroException e) {
+            ui.showError(e.getMessage());
+        }
+    }
+
     /**
      *  Runs the kuro chatbot
      *
@@ -131,6 +146,10 @@ public class Kuro {
                     ui.showError("Error saving data");
                 }
                 ui.bye();
+                break;
+            case "find":
+                String searchString = input.split(" ")[1];
+                this.filterTaskList(searchString);
                 break;
             case "mark":
                 index = Integer.parseInt(input.split(" ")[1]) - 1;

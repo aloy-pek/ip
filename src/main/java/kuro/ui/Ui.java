@@ -103,6 +103,20 @@ public class Ui {
     }
 
     /**
+     * Prints the find command message.
+     *
+     * @param taskList The filtered TaskList.
+     */
+    public void showFilteredList(TaskList taskList) {
+        System.out.printf("""
+                        ____________________________________________________________
+                        Douzo,Here are the matching tasks in your list:
+                        %s
+                        ____________________________________________________________
+                        %n""", taskList.toString());
+    }
+
+    /**
      * Prints the error message.
      *
      * @param message The error message to be shown.
