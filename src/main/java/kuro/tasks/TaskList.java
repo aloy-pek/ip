@@ -10,7 +10,7 @@ public class TaskList {
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
-    
+
     public ArrayList<Task> getAllTasks() {
         return tasks;
     }
@@ -58,7 +58,7 @@ public class TaskList {
         }
         return this.tasks.get(index);
     }
-    
+
     @Override
     public String toString() {
         StringBuilder listString = new StringBuilder();

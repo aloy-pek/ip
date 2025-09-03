@@ -35,13 +35,13 @@ public class Ui {
      */
     public void showMark(String task) {
         System.out.printf("""
-                        ____________________________________________________________
-                        Sugoi, I have marked this task as done:
-                        %s
-                        ____________________________________________________________
-                        %n""", task);
+                ____________________________________________________________
+                Sugoi, I have marked this task as done:
+                %s
+                ____________________________________________________________
+                %n""", task);
     }
-    
+
     /**
      * Prints the unmarking command message.
      *
@@ -49,11 +49,11 @@ public class Ui {
      */
     public void showUnmark(String task) {
         System.out.printf("""
-                        ____________________________________________________________
-                        Hai, I have marked this task as not done yet:
-                        %s
-                        ____________________________________________________________
-                        %n""", task);
+                ____________________________________________________________
+                Hai, I have marked this task as not done yet:
+                %s
+                ____________________________________________________________
+                %n""", task);
     }
     
     /**
@@ -64,12 +64,12 @@ public class Ui {
      */
     public void showAdd(String task, int numberOfTasks) {
         System.out.printf("""
-                        ____________________________________________________________
-                        Wakarimashita, I have added this task:
-                        %s
-                        Now, you have %d tasks in the list.
-                        ____________________________________________________________
-                        %n""", task, numberOfTasks);
+                ____________________________________________________________
+                Wakarimashita, I have added this task:
+                %s
+                Now, you have %d tasks in the list.
+                ____________________________________________________________
+                %n""", task, numberOfTasks);
     }
 
     /**
@@ -80,12 +80,12 @@ public class Ui {
      */
     public void showRemove(String task, int numberOfTasks) {
         System.out.printf("""
-                        ____________________________________________________________
-                        Hai, I have removed this task:
-                        %s
-                        Now, you have %d tasks in the list.
-                        ____________________________________________________________
-                        %n""", task, numberOfTasks);
+                ____________________________________________________________
+                Hai, I have removed this task:
+                %s
+                Now, you have %d tasks in the list.
+                ____________________________________________________________
+                %n""", task, numberOfTasks);
     }
 
     /**
@@ -95,11 +95,11 @@ public class Ui {
      */
     public void showList(TaskList taskList) {
         System.out.printf("""
-                        ____________________________________________________________
-                        Douzo,Here are the task in your list:
-                        %s
-                        ____________________________________________________________
-                        %n""", taskList.toString());
+                ____________________________________________________________
+                Douzo,Here are the task in your list:
+                %s
+                ____________________________________________________________
+                %n""", taskList.toString());
     }
 
     /**
@@ -109,9 +109,9 @@ public class Ui {
      */
     public void showError(String message) {
         System.out.printf("""
-                        ____________________________________________________________
-                        Error while interacting with Kuro: %s
-                        ____________________________________________________________
-                        %n""", message);
+                ____________________________________________________________
+                Error while interacting with Kuro: %s
+                ____________________________________________________________
+                %n""", message);
     }
 }
