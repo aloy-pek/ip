@@ -1,8 +1,12 @@
 package kuro.chatbot;
 
+import static kuro.constants.Messages.WELCOME_MESSAGE;
+import static kuro.constants.StorageConstants.FILE_PATH;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
+import kuro.constants.Messages;
 import kuro.exceptions.KuroException;
 import kuro.parser.CommandParser;
 import kuro.storage.Storage;
@@ -40,143 +44,156 @@ public class Kuro {
     }
 
     /**
-     * Sends task to be shown to ui to print out the list of tasks.
+     * Return the String of list of tasks.
+     *
+     * @return String representation of the current state of list of task.
      */
-    public void listTasks() {
-        this.ui.showList(tasks);
+    public String listTasks() {
+        return this.ui.showList(tasks);
     }
 
     /**
      * Sends new task to added to tasks.
-     * Sends task string representation and length of tasks to ui to print add task message.
+     * Returns add Task message.
      *
-     * @param task new Task to be added
+     * @param task new Task to be added.
+     * @return String representation of add task message.
      */
-    public void addTask(Task task) {
+    public String addTask(Task task) {
         tasks.addTask(task);
-        ui.showAdd(task.toString(), tasks.getSize());
+        return ui.showAdd(task.toString(), tasks.getSize());
     }
 
     /**
      * Get specific task from tasks and call tasks to delete it.
-     * Sends task string representation and length of tasks to ui to print delete task message.
+     * Returns the String obtained from sends task string representation and length of tasks to ui.
      *
      * @param index The index of task to be deleted
+     * @return String representation of delete task message.
      */
-    public void deleteTask(int index) {
+    public String deleteTask(int index) {
         try {
             String taskRemoved = tasks.getTask(index).toString();
             tasks.deleteTask(index);
-            ui.showRemove(taskRemoved, tasks.getSize());
+            return ui.showRemove(taskRemoved, tasks.getSize());
         } catch (KuroException e) {
-            ui.showError(e.getMessage());
+            return ui.showError(e.getMessage());
         }
     }
 
     /**
      * Get specific task from tasks and call tasks to mark it.
-     * Sends task string representation to ui to print mark task message.
+     * Return the String obtained from sending task string representation to ui.
      *
-     * @param index The index of task to be marked
+     * @param index The index of task to be marked.
+     * @return String representation of marking task message.
      */
-    public void markTaskAsDone(int index) {
+    public String markTaskAsDone(int index) {
         try {
             tasks.getTask(index).setStatus(true);
-            ui.showMark(tasks.getTask(index).toString());
+            return ui.showMark(tasks.getTask(index).toString());
         } catch (KuroException e) {
-            ui.showError(e.getMessage());
+            return ui.showError(e.getMessage());
         }
     }
 
     /**
      * Get specific task from tasks and call tasks to unmark it.
-     * Sends task string representation to ui to print unmark task message.
+     * Return the String obtained from sending task string representation to ui.
      *
      * @param index The index of task to be unmarked
+     * @return String representation of unmarking task message.
      */
-    public void markTaskAsNotDone(int index) {
+    public String markTaskAsNotDone(int index) {
         try {
             tasks.getTask(index).setStatus(false);
-            ui.showUnmark(tasks.getTask(index).toString());
+            return ui.showUnmark(tasks.getTask(index).toString());
         } catch (KuroException e) {
-            ui.showError(e.getMessage());
+            return ui.showError(e.getMessage());
         }
     }
 
     /**
      * Get filtered taskList from tasks.
-     * Sends filtered taskList to ui to print find task message.
+     * Return the String obtained from sending filtered taskList to ui.
      *
      * @param searchString The keyword to be searched.
+     * @return String representation of filter task message.
      */
-    public void filterTaskList(String searchString) {
+    public String filterTaskList(String searchString) {
         try {
             TaskList filteredList = this.tasks.filterTask(searchString);
-            ui.showFilteredList(filteredList);
+            return ui.showFilteredList(filteredList);
         } catch (KuroException e) {
-            ui.showError(e.getMessage());
+            return ui.showError(e.getMessage());
         }
     }
 
     /**
-     * Runs the kuro chatbot
+     * Return the String obtained from carrying out the command from input.
+     *
+     * @param input The command typed in CLI or GUI.
+     * @return String representation of response from Kuro.
+     */
+    public String executeCommand(String input) {
+        Task newTask;
+        int index;
+
+        try {
+            newTask = this.parser.parse(input);
+        } catch (KuroException e) {
+            return ui.showError(e.getMessage());
+        }
+
+        switch (newTask.getCommand()) {
+        case "bye":
+            try {
+                storage.save(tasks.getAllTasks());
+            } catch (IOException e) {
+                return ui.showError("Error saving data");
+            }
+            return Messages.GOODBYE_MESSAGE;
+        case "find":
+            String searchString = input.split(" ")[1];
+            return this.filterTaskList(searchString);
+        case "mark":
+            index = Integer.parseInt(input.split(" ")[1]) - 1;
+            return this.markTaskAsDone(index);
+        case "unmark":
+            index = Integer.parseInt(input.split(" ")[1]) - 1;
+            return this.markTaskAsNotDone(index);
+        case "delete":
+            index = Integer.parseInt(input.split(" ")[1]) - 1;
+            return this.deleteTask(index);
+        case "list":
+            return this.listTasks();
+        default:
+            if (newTask.getCommand().isEmpty()) {
+                return ui.showError("Please enter your command");
+            }
+            return this.addTask(newTask);
+        }
+    }
+
+    /**
+     * Runs the kuro chatbot for cli.
      *
      */
     public void run() {
         boolean isOperating = true;
-        ui.welcome();
+        ui.printMessage(WELCOME_MESSAGE);
 
         while (isOperating) {
             String input = ui.readCommand();
-            Task newTask;
-            int index;
-
-            try {
-                newTask = this.parser.parse(input);
-            } catch (KuroException e) {
-                ui.showError(e.getMessage());
-                continue;
-            }
-
-            switch (newTask.getCommand()) {
-            case "bye":
+            String response = this.executeCommand(input);
+            if (response.equals(Messages.GOODBYE_MESSAGE)) {
                 isOperating = false;
-                try {
-                    storage.save(tasks.getAllTasks());
-                } catch (IOException e) {
-                    ui.showError("Error saving data");
-                }
-                ui.bye();
-                break;
-            case "find":
-                String searchString = input.split(" ")[1];
-                this.filterTaskList(searchString);
-                break;
-            case "mark":
-                index = Integer.parseInt(input.split(" ")[1]) - 1;
-                this.markTaskAsDone(index);
-                break;
-            case "unmark":
-                index = Integer.parseInt(input.split(" ")[1]) - 1;
-                this.markTaskAsNotDone(index);
-                break;
-            case "delete":
-                index = Integer.parseInt(input.split(" ")[1]) - 1;
-                this.deleteTask(index);
-                break;
-            case "list":
-                this.listTasks();
-                break;
-            default:
-                if (newTask.getCommand().isEmpty()) {
-                    break;
-                }
-                this.addTask(newTask);
             }
+            ui.printMessage(response);
         }
     }
 
     public static void main(String[] args) {
-        new Kuro("./data/kuro.txt").run();
+        new Kuro(FILE_PATH).run();
     }
 }

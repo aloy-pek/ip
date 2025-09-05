@@ -1,5 +1,6 @@
 package kuro.ui;
 
+
 import java.util.Scanner;
 
 import kuro.constants.Messages;
@@ -21,118 +22,96 @@ public class Ui {
         return scanner.nextLine();
     }
 
-    /**
-     * Prints the welcome message.
-     */
-    public void welcome() {
-        System.out.println(Messages.WELCOME_MESSAGE);
+    private String wrapMessage(String message) {
+        return String.format("""
+                ____________________________________________________________
+                %s
+                ____________________________________________________________
+                %n""", message);
     }
 
-    /**
-     * Prints the goodbye message.
-     */
-    public void bye() {
-        System.out.println(Messages.GOODBYE_MESSAGE);
-    }
 
     /**
-     * Prints the marking command message.
+     * Prints the inputted String.
+     *
+     * @param message The String to be printed.
+     */
+    public void printMessage(String message) {
+        System.out.printf(wrapMessage(message));
+    }
+
+
+    // Function returning all the potential messages.
+
+    /**
+     * Returns the marking command message.
      *
      * @param task The String representation of task that was marked.
+     * @return String message for marking task.
      */
-    public void showMark(String task) {
-        System.out.printf("""
-                ____________________________________________________________
-                Sugoi, I have marked this task as done:
-                %s
-                ____________________________________________________________
-                %n""", task);
+    public String showMark(String task) {
+        return String.format(Messages.MARKING_MESSAGE, task);
     }
 
     /**
-     * Prints the unmarking command message.
+     * Returns the unmarking command message.
      *
      * @param task The String representation of task that was unmarked.
+     * @return String message for unmarking task.
      */
-    public void showUnmark(String task) {
-        System.out.printf("""
-                ____________________________________________________________
-                Hai, I have marked this task as not done yet:
-                %s
-                ____________________________________________________________
-                %n""", task);
+    public String showUnmark(String task) {
+        return String.format(Messages.UNMARKING_MESSAGE, task);
     }
 
     /**
-     * Prints the add Task command message.
+     * Returns the add Task command message.
      *
      * @param task          The String representation of task that was added.
      * @param numberOfTasks The integer showing the number of task in taskList.
+     * @return String message for adding task.
      */
-    public void showAdd(String task, int numberOfTasks) {
-        System.out.printf("""
-                ____________________________________________________________
-                Wakarimashita, I have added this task:
-                %s
-                Now, you have %d tasks in the list.
-                ____________________________________________________________
-                %n""", task, numberOfTasks);
+    public String showAdd(String task, int numberOfTasks) {
+        return String.format(Messages.ADDING_MESSAGE, task, numberOfTasks);
     }
 
     /**
-     * Prints the remove Task command message.
+     * Returns the remove Task command message.
      *
      * @param task          The String representation of task that was removed.
      * @param numberOfTasks The integer showing the number of task left in taskList.
+     * @return String message for removing task.
      */
-    public void showRemove(String task, int numberOfTasks) {
-        System.out.printf("""
-                ____________________________________________________________
-                Hai, I have removed this task:
-                %s
-                Now, you have %d tasks in the list.
-                ____________________________________________________________
-                %n""", task, numberOfTasks);
+    public String showRemove(String task, int numberOfTasks) {
+        return String.format(Messages.REMOVE_MESSAGE, task, numberOfTasks);
     }
 
     /**
-     * Prints the list command message.
+     * Returns the list command message.
      *
      * @param taskList The TaskList at its current state.
+     * @return String message for showing List of task.
      */
-    public void showList(TaskList taskList) {
-        System.out.printf("""
-                ____________________________________________________________
-                Douzo,Here are the task in your list:
-                %s
-                ____________________________________________________________
-                %n""", taskList.toString());
+    public String showList(TaskList taskList) {
+        return String.format(Messages.SHOW_LIST_MESSAGE, taskList.toString());
     }
 
     /**
-     * Prints the find command message.
+     * Returns the find command message.
      *
      * @param taskList The filtered TaskList.
+     * @return String message for showing List of task.
      */
-    public void showFilteredList(TaskList taskList) {
-        System.out.printf("""
-                ____________________________________________________________
-                Douzo,Here are the matching tasks in your list:
-                %s
-                ____________________________________________________________
-                %n""", taskList.toString());
+    public String showFilteredList(TaskList taskList) {
+        return String.format(Messages.SHOW_FILTERED_LIST_MESSAGE, taskList.toString());
     }
 
     /**
-     * Prints the error message.
+     * Returns the error message.
      *
      * @param message The error message to be shown.
+     * @return String message for showing List of task.
      */
-    public void showError(String message) {
-        System.out.printf("""
-                ____________________________________________________________
-                Error while interacting with Kuro: %s
-                ____________________________________________________________
-                %n""", message);
+    public String showError(String message) {
+        return String.format(Messages.ERROR_MESSAGE, message);
     }
 }
