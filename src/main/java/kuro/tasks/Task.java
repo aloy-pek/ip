@@ -4,22 +4,22 @@ package kuro.tasks;
  * The main Task class that is a superclass for other tasks classes.
  */
 public class Task {
-    protected String command;
+    protected String description;
     protected boolean isCompleted;
 
     /**
      * Constructor for Task class.
      */
-    public Task(String command) {
-        this.command = command;
+    public Task(String description) {
+        this.description = description;
         this.isCompleted = false;
     }
 
     /**
      * Constructor for Task class.
      */
-    public Task(String command, boolean isCompleted) {
-        this.command = command;
+    public Task(String description, boolean isCompleted) {
+        this.description = description;
         this.isCompleted = isCompleted;
     }
 
@@ -32,8 +32,8 @@ public class Task {
         return (this.isCompleted ? "X" : " ");
     }
 
-    public String getCommand() {
-        return this.command;
+    public String getDescription() {
+        return this.description;
     }
 
     public void setStatus(boolean status) {
@@ -46,11 +46,11 @@ public class Task {
      * @return Formatted string of Task.
      */
     public String toSaveFormat() {
-        return String.format("T | %d | %s", isCompleted ? 1 : 0, command);
+        return String.format("T | %d | %s", isCompleted ? 1 : 0, description);
     }
 
     @Override
     public String toString() {
-        return "[" + (isCompleted ? "X" : " ") + "] " + this.command;
+        return "[" + (isCompleted ? "X" : " ") + "] " + this.description;
     }
 }

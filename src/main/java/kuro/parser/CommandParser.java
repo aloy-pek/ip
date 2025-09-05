@@ -33,7 +33,7 @@ public class CommandParser {
         case "event":
             return parseEvent(fullCommand);
         case "mark", "unmark", "delete", "find":
-            return parseMarkUnmarkDeleteFind(fullCommand);
+            return parseTaskCommand(fullCommand);
         case "list", "bye":
             return new Task(command); //misc task
         default:
@@ -85,7 +85,8 @@ public class CommandParser {
         }
     }
 
-    private Task parseMarkUnmarkDeleteFind(String fullCommand) throws KuroException {
+    //handles Mark, Unmark, Delete, Find commands.
+    private Task parseTaskCommand(String fullCommand) throws KuroException {
         try {
             if (fullCommand.split(" ").length < 2) {
                 throw new KuroException("Sumimasen, invalid command or format. Please try again.");

@@ -122,7 +122,7 @@ public class Kuro {
      */
     public String filterTaskList(String searchString) {
         try {
-            TaskList filteredList = this.tasks.filterTask(searchString);
+            TaskList filteredList = this.tasks.filterTaskByKeyword(searchString);
             return ui.showFilteredList(filteredList);
         } catch (KuroException e) {
             return ui.showError(e.getMessage());
@@ -145,7 +145,7 @@ public class Kuro {
             return ui.showError(e.getMessage());
         }
 
-        switch (newTask.getCommand()) {
+        switch (newTask.getDescription()) {
         case "bye":
             try {
                 storage.save(tasks.getAllTasks());
@@ -168,7 +168,7 @@ public class Kuro {
         case "list":
             return this.listTasks();
         default:
-            if (newTask.getCommand().isEmpty()) {
+            if (newTask.getDescription().isEmpty()) {
                 return ui.showError("Please enter your command");
             }
             return this.addTask(newTask);
