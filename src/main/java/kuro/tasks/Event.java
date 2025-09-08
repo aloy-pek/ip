@@ -15,6 +15,9 @@ public class Event extends Task {
      */
     public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
+        assert start != null : "Event start time cannot be null";
+        assert end != null : "Event end time cannot be null";
+        assert !end.isBefore(start) : "Event end time cannot be before start time";
         this.start = start;
         this.end = end;
     }
@@ -23,6 +26,9 @@ public class Event extends Task {
      */
     public Event(String description, LocalDateTime start, LocalDateTime end, boolean isCompleted) {
         super(description, isCompleted);
+        assert start != null : "Event start time cannot be null";
+        assert end != null : "Event end time cannot be null";
+        assert !end.isBefore(start) : "Event end time cannot be before start time";
         this.start = start;
         this.end = end;
     }
