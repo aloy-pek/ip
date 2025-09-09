@@ -2,6 +2,7 @@ package kuro.tasks;
 
 import java.util.ArrayList;
 
+import kuro.constants.Messages;
 import kuro.exceptions.KuroException;
 /**
  * Class to store all the task that user inputted.
@@ -25,7 +26,7 @@ public class TaskList {
      */
     public void deleteTask(int index) throws KuroException {
         if (index < 0 || index > this.tasks.size() - 1) {
-            throw new KuroException("Index out of bounds");
+            throw new KuroException(Messages.OUT_OF_BOUND_ERROR);
         }
         this.tasks.remove(index);
     }
@@ -56,7 +57,7 @@ public class TaskList {
      */
     public Task getTask(int index) throws KuroException {
         if (index < 0 || index > this.tasks.size() - 1) {
-            throw new KuroException("Index out of bounds");
+            throw new KuroException(Messages.OUT_OF_BOUND_ERROR);
         }
         return this.tasks.get(index);
     }
@@ -75,7 +76,7 @@ public class TaskList {
             }
         }
         if (filteredList.getSize() == 0) {
-            throw new KuroException("No task matched the keyword");
+            throw new KuroException(Messages.NONMATCHING_FILTER);
         }
         return filteredList;
     }

@@ -12,6 +12,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import kuro.constants.Messages;
 import kuro.exceptions.KuroException;
 import kuro.tasks.Deadline;
 import kuro.tasks.Event;
@@ -43,48 +44,53 @@ public class Storage {
             Files.createFile(filepath);
             return tasks;
         }
+        
         try (Scanner sc = new Scanner(filepath.toFile())) {
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                String[] parts = line.split(" \\| ");
-                String type = parts[0];
-                boolean isDone = parts[1].equals("1");
-                String description = parts[2];
-
-                switch (type) {
-                case "T":
-                    tasks.add(new Todo(description, isDone));
-                    break;
-                case "D":
-                    String by = parts[3];
-                    try {
-                        LocalDateTime dateTime = LocalDateTime.parse(by, DateTimeFormatter.ISO_DATE_TIME);
-                        tasks.add(new Deadline(description, dateTime, isDone));
-                    } catch (DateTimeParseException e) {
-                        throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
-                    }
-                    break;
-                case "E":
-                    String start = parts[3];
-                    String end = parts[4];
-                    try {
-                        LocalDateTime startDateTime = LocalDateTime.parse(start, DateTimeFormatter.ISO_DATE_TIME);
-                        LocalDateTime endDateTime = LocalDateTime.parse(end, DateTimeFormatter.ISO_DATE_TIME);
-                        tasks.add(new Event(description, startDateTime, endDateTime, isDone));
-                    } catch (DateTimeParseException e) {
-                        throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
-                    }
-
-                    break;
-                default:
-                    throw new KuroException("Unknown task type in file");
-                }
-            }
+            processLoadLine(sc, tasks);
         } catch (FileNotFoundException e) {
-            throw new KuroException("File not found: ");
+            throw new KuroException(Messages.ERROR_LOADING_FILE_MESSAGE);
         }
 
         return tasks;
+    }
+    
+    public void processLoadLine(Scanner sc, ArrayList<Task> tasks) throws KuroException {
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] parts = line.split(" \\| ");
+            String type = parts[0];
+            boolean isDone = parts[1].equals("1");
+            String description = parts[2];
+
+            switch (type) {
+            case "T":
+                tasks.add(new Todo(description, isDone));
+                break;
+            case "D":
+                String by = parts[3];
+                try {
+                    LocalDateTime dateTime = LocalDateTime.parse(by, DateTimeFormatter.ISO_DATE_TIME);
+                    tasks.add(new Deadline(description, dateTime, isDone));
+                } catch (DateTimeParseException e) {
+                    throw new KuroException(Messages.INVALID_DATE);
+                }
+                break;
+            case "E":
+                String start = parts[3];
+                String end = parts[4];
+                try {
+                    LocalDateTime startDateTime = LocalDateTime.parse(start, DateTimeFormatter.ISO_DATE_TIME);
+                    LocalDateTime endDateTime = LocalDateTime.parse(end, DateTimeFormatter.ISO_DATE_TIME);
+                    tasks.add(new Event(description, startDateTime, endDateTime, isDone));
+                } catch (DateTimeParseException e) {
+                    throw new KuroException(Messages.INVALID_DATE);
+                }
+
+                break;
+            default:
+                throw new KuroException(Messages.ERROR_LOADING_FILE_MESSAGE);
+            }
+        }
     }
 
     /**

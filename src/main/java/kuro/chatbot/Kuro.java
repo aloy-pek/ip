@@ -39,7 +39,7 @@ public class Kuro {
             ui.showError(e.getMessage());
             this.tasks = new TaskList(new ArrayList<Task>());
         } catch (IOException e) {
-            ui.showError("Error Loading File");
+            ui.showError(Messages.ERROR_LOADING_FILE_MESSAGE);
         }
     }
 
@@ -150,7 +150,7 @@ public class Kuro {
             try {
                 storage.save(tasks.getAllTasks());
             } catch (IOException e) {
-                return ui.showError("Error saving data");
+                return ui.showError(Messages.ERROR_SAVING_FILE_MESSAGE);
             }
             return Messages.GOODBYE_MESSAGE;
         case "find":
@@ -169,7 +169,7 @@ public class Kuro {
             return this.listTasks();
         default:
             if (newTask.getDescription().isEmpty()) {
-                return ui.showError("Please enter your command");
+                return ui.showError(Messages.ERROR_MISSING_COMMAND_MESSAGE);
             }
             return this.addTask(newTask);
         }
