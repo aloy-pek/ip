@@ -10,6 +10,7 @@ public class TaskList {
     private ArrayList<Task> tasks;
 
     public TaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "Task list cannot be null";
         this.tasks = tasks;
     }
 
@@ -36,6 +37,7 @@ public class TaskList {
      * @param task Task to be added.
      */
     public void addTask(Task task) {
+        assert task != null : "Task cannot be null";
         this.tasks.add(task);
     }
 
