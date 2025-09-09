@@ -11,6 +11,7 @@ public class Task {
      * Constructor for Task class.
      */
     public Task(String description) {
+        assert description != null && !description.isBlank() : "Task description must not be null or blank";
         this.description = description;
         this.isCompleted = false;
     }
@@ -19,6 +20,7 @@ public class Task {
      * Constructor for Task class.
      */
     public Task(String description, boolean isCompleted) {
+        assert description != null && !description.isBlank() : "Task description must not be null or blank";
         this.description = description;
         this.isCompleted = isCompleted;
     }
