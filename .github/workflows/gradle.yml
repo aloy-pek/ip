@@ -20,6 +20,18 @@ jobs:
 
       - name: Merge to master
         run: git checkout --progress --force ${{ github.sha }}
+        
+      - name: Normalize line endings
+        run: |
+          # Unix-like runners: convert .sh to LF
+          if [[ "${{ runner.os }}" != "Windows" ]]; then
+            find . -name "*.sh" -exec dos2unix {} \;
+          fi
+          
+          # Windows runner: convert .bat to CRLF
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            powershell -Command "Get-ChildItem -Recurse -Filter *.bat | ForEach-Object { (Get-Content $_.FullName) -replace '`r?`n','`r`n' | Set-Content $_.FullName -NoNewline }"
+          fi
 
       - name: Validate Gradle Wrapper
         uses: gradle/actions/wrapper-validation@v3
@@ -31,9 +43,6 @@ jobs:
           java-version: '17'
           java-package: jdk+fx
 
-      - name: Build and check with Gradle
-        run: ./gradlew check
-
       - name: Install dos2unix on Linux
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y dos2unix
@@ -41,6 +50,15 @@ jobs:
       - name: Install dos2unix on macOS
         if: runner.os == 'macOS'
         run: brew install dos2unix
+        
+      - name: Convert scripts to Unix line endings
+        if: runner.os == 'Linux' || runner.os == 'macOS'
+        run: |
+          find . -type f -name "*.sh" -exec dos2unix {} \;
+          find . -type f -name "*.gradle*" -exec dos2unix {} \;
+
+      - name: Build and check with Gradle
+        run: ./gradlew check
 
       - name: Perform IO redirection test (*NIX or macOS)
         if: runner.os == 'Linux' || runner.os == 'macOS'
