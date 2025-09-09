@@ -82,6 +82,15 @@ public class TaskList {
         }
         return filteredList;
     }
+    
+    public boolean hasDuplicate(String description) {
+        try  {
+            TaskList filteredTasks = this.filterTaskByKeyword(description);
+        } catch(KuroException e) {
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public String toString() {

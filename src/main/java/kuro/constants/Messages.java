@@ -31,6 +31,7 @@ public class Messages {
              %s""";
     public static final String ERROR_MESSAGE = """
              Error while interacting with Kuro: %s""";
+    public static final String DUPLICATE_ERROR = "Sumimasen, this current has already exists.";
     public static final String ERROR_LOADING_FILE_MESSAGE = "Error Loading File";
     public static final String ERROR_SAVING_FILE_MESSAGE = "Error saving data";
     public static final String ERROR_MISSING_COMMAND_MESSAGE = "Please enter your command";
@@ -40,5 +41,4 @@ public class Messages {
     public static final String MISSING_TASK_DESCRIPTION = "Sumimasen, please specify the task description.";
     public static final String NONMATCHING_FILTER = "No task matched the keyword";
     public static final String OUT_OF_BOUND_ERROR = "Index out of bounds";
-
 }

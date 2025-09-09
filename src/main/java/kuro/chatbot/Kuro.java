@@ -50,7 +50,7 @@ public class Kuro {
      * @return String representation of the current state of list of task.
      */
     public String listTasks() {
-        return this.ui.showList(tasks);
+        return this.ui.showList(this.tasks);
     }
 
     /**
@@ -61,8 +61,8 @@ public class Kuro {
      * @return String representation of add task message.
      */
     public String addTask(Task task) {
-        tasks.addTask(task);
-        return ui.showAdd(task.toString(), tasks.getSize());
+        this.tasks.addTask(task);
+        return ui.showAdd(task.toString(), this.tasks.getSize());
     }
 
     /**
@@ -74,9 +74,9 @@ public class Kuro {
      */
     public String deleteTask(int index) {
         try {
-            String taskRemoved = tasks.getTask(index).toString();
-            tasks.deleteTask(index);
-            return ui.showRemove(taskRemoved, tasks.getSize());
+            String taskRemoved = this.tasks.getTask(index).toString();
+            this.tasks.deleteTask(index);
+            return ui.showRemove(taskRemoved, this.tasks.getSize());
         } catch (KuroException e) {
             return ui.showError(e.getMessage());
         }
@@ -91,8 +91,8 @@ public class Kuro {
      */
     public String markTaskAsDone(int index) {
         try {
-            tasks.getTask(index).setStatus(true);
-            return ui.showMark(tasks.getTask(index).toString());
+            this.tasks.getTask(index).setStatus(true);
+            return ui.showMark(this.tasks.getTask(index).toString());
         } catch (KuroException e) {
             return ui.showError(e.getMessage());
         }
@@ -107,8 +107,8 @@ public class Kuro {
      */
     public String markTaskAsNotDone(int index) {
         try {
-            tasks.getTask(index).setStatus(false);
-            return ui.showUnmark(tasks.getTask(index).toString());
+            this.tasks.getTask(index).setStatus(false);
+            return ui.showUnmark(this.tasks.getTask(index).toString());
         } catch (KuroException e) {
             return ui.showError(e.getMessage());
         }
@@ -141,7 +141,7 @@ public class Kuro {
         int index;
 
         try {
-            newTask = this.parser.parse(input);
+            newTask = this.parser.parse(input, this.tasks);
         } catch (KuroException e) {
             return ui.showError(e.getMessage());
         }
@@ -149,7 +149,7 @@ public class Kuro {
         switch (newTask.getDescription()) {
         case "bye":
             try {
-                storage.save(tasks.getAllTasks());
+                storage.save(this.tasks.getAllTasks());
             } catch (IOException e) {
                 return ui.showError(Messages.ERROR_SAVING_FILE_MESSAGE);
             }

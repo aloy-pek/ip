@@ -9,6 +9,7 @@ import kuro.exceptions.KuroException;
 import kuro.tasks.Deadline;
 import kuro.tasks.Event;
 import kuro.tasks.Task;
+import kuro.tasks.TaskList;
 import kuro.tasks.Todo;
 
 /**
@@ -20,19 +21,20 @@ public class CommandParser {
      * Returns the created Task from parsing user input
      *
      * @param fullCommand The String that user input in CLI.
+     * @param tasks The current active TaskList.
      * @return A specific task depending on input.
      * @throws KuroException If user command is not a valid command.
      */
-    public Task parse(String fullCommand) throws KuroException {
+    public Task parse(String fullCommand, TaskList tasks) throws KuroException {
         String command = fullCommand.split(" ")[0].toLowerCase();
 
         switch (command) {
         case "todo":
-            return parseTodo(fullCommand);
+            return parseTodo(fullCommand, tasks);
         case "deadline":
-            return parseDeadline(fullCommand);
+            return parseDeadline(fullCommand, tasks);
         case "event":
-            return parseEvent(fullCommand);
+            return parseEvent(fullCommand, tasks);
         case "mark", "unmark", "delete", "find":
             return parseTaskCommand(fullCommand);
         case "list", "bye":
@@ -41,21 +43,31 @@ public class CommandParser {
             throw new KuroException(Messages.UNREGISTERED_COMMAND);
         }
     }
-
-    private Task parseTodo(String fullCommand) throws KuroException {
+    
+    private Task parseTodo(String fullCommand, TaskList tasks) throws KuroException {
         if (fullCommand.length() < 4) {
             throw new KuroException(Messages.MISSING_TASK_DESCRIPTION);
         }
-        return new Todo(fullCommand.substring(fullCommand.indexOf(" ") + 1));
+        
+        String description = fullCommand.substring(fullCommand.indexOf(" ") + 1);
+        if (tasks.hasDuplicate(description)) {
+            throw new KuroException(Messages.DUPLICATE_ERROR);
+        }
+        return new Todo(description);
     }
 
-    private Task parseDeadline(String fullCommand) throws KuroException {
+
+    private Task parseDeadline(String fullCommand, TaskList tasks) throws KuroException {
         boolean isInvalidDeadlineCommand = !fullCommand.contains("/by") || fullCommand.length() < 13;
         if (isInvalidDeadlineCommand) {
             throw new KuroException(Messages.INVALID_COMMAND);
         }
         String description = fullCommand.substring(9, fullCommand.indexOf("/by")).trim();
         String by = fullCommand.substring(fullCommand.indexOf("/by") + 4).trim();
+        if (tasks.hasDuplicate(description)) {
+            throw new KuroException(Messages.DUPLICATE_ERROR);
+        }
+        
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(by, formatter);
@@ -64,8 +76,8 @@ public class CommandParser {
             throw new KuroException(Messages.INVALID_DATE);
         }
     }
-
-    private Task parseEvent(String fullCommand) throws KuroException {
+    
+    private Task parseEvent(String fullCommand, TaskList tasks) throws KuroException {
         boolean isInvalidEventCommand = !fullCommand.contains("/from")
                 || !fullCommand.contains("/to")
                 || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")
@@ -77,6 +89,11 @@ public class CommandParser {
         String description = fullCommand.substring(6, fullCommand.indexOf("/from")).trim();
         String start = fullCommand.substring(fullCommand.indexOf("/from") + 6, fullCommand.indexOf("/to")).trim();
         String end = fullCommand.substring(fullCommand.indexOf("/to") + 4).trim();
+
+        if (tasks.hasDuplicate(description)) {
+            throw new KuroException(Messages.DUPLICATE_ERROR);
+        }
+        
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime startDateTime = LocalDateTime.parse(start, formatter);
