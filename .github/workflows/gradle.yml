@@ -21,17 +21,17 @@ jobs:
       - name: Merge to master
         run: git checkout --progress --force ${{ github.sha }}
         
-      - name: Normalize line endings
-        run: |
-          # Unix-like runners: convert .sh to LF
-          if [[ "${{ runner.os }}" != "Windows" ]]; then
-            find . -name "*.sh" -exec dos2unix {} \;
-          fi
-          
-          # Windows runner: convert .bat to CRLF
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            powershell -Command "Get-ChildItem -Recurse -Filter *.bat | ForEach-Object { (Get-Content $_.FullName) -replace '`r?`n','`r`n' | Set-Content $_.FullName -NoNewline }"
-          fi
+      - name: Normalize .sh to LF (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: find . -name "*.sh" -exec dos2unix {} \;
+
+      - name: Normalize .bat to CRLF (Windows)
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: Get-ChildItem -Recurse -Filter *.bat | ForEach-Object {
+          (Get-Content $_.FullName) -replace "`r?`n","`r`n" |
+          Set-Content $_.FullName -NoNewline
+          }
 
       - name: Validate Gradle Wrapper
         uses: gradle/actions/wrapper-validation@v3
@@ -49,7 +49,12 @@ jobs:
 
       - name: Install dos2unix on macOS
         if: runner.os == 'macOS'
-        run: brew install dos2unix
+        run: |
+          if ! command -v dos2unix &> /dev/null; then
+            brew install dos2unix
+          else
+            echo "dos2unix already installed"
+          fi
         
       - name: Convert scripts to Unix line endings
         if: runner.os == 'Linux' || runner.os == 'macOS'
