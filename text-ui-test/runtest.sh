@@ -27,11 +27,14 @@ java -classpath ../bin kuro.chatbot.Kuro < input.txt > ACTUAL.TXT
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
 
+# normalize slashes for cross-platform compatibility
+sed -i.bak 's|\\|/|g' ACTUAL.TXT EXPECTED-UNIX.TXT
+rm -f ACTUAL.TXT.bak EXPECTED-UNIX.TXT.bak
+
 # compare the output to the expected output
-sed -i 's|\\|/|g' ACTUAL.TXT EXPECTED-UNIX.TXT
 diff ACTUAL.TXT EXPECTED-UNIX.TXT
 if [ $? -eq 0 ]
-thent
+then
     echo "Test result: PASSED"
     exit 0
 else
