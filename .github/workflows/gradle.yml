@@ -21,16 +21,18 @@ jobs:
       - name: Merge to master
         run: git checkout --progress --force ${{ github.sha }}
         
-      - name: Normalize .sh to LF (Linux/macOS)
+      - name: Normalize scripts to LF (Linux/macOS)
         if: runner.os != 'Windows'
-        run: find . -name "*.sh" -exec dos2unix {} \;
+        run: |
+          find . -type f -name "*.sh" -exec dos2unix {} \;
+          find . -type f -name "*.gradle*" -exec dos2unix {} \;
 
       - name: Normalize .bat to CRLF (Windows)
         if: runner.os == 'Windows'
         shell: powershell
         run: Get-ChildItem -Recurse -Filter *.bat | ForEach-Object {
           (Get-Content $_.FullName) -replace "`r?`n","`r`n" |
-          Set-Content $_.FullName -NoNewline
+          Set-Content $_.FullName
           }
 
       - name: Validate Gradle Wrapper
@@ -42,25 +44,6 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           java-package: jdk+fx
-
-      - name: Install dos2unix on Linux
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y dos2unix
-
-      - name: Install dos2unix on macOS
-        if: runner.os == 'macOS'
-        run: |
-          if ! command -v dos2unix &> /dev/null; then
-            brew install dos2unix
-          else
-            echo "dos2unix already installed"
-          fi
-        
-      - name: Convert scripts to Unix line endings
-        if: runner.os == 'Linux' || runner.os == 'macOS'
-        run: |
-          find . -type f -name "*.sh" -exec dos2unix {} \;
-          find . -type f -name "*.gradle*" -exec dos2unix {} \;
 
       - name: Build and check with Gradle
         run: ./gradlew check
