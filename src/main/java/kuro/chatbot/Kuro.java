@@ -31,6 +31,7 @@ public class Kuro {
     public Kuro(String filePath) {
         this.ui = new Ui();
         this.parser = new CommandParser();
+        assert filePath != null : "File path should not be null";
         this.storage = new Storage(filePath);
 
         try {
