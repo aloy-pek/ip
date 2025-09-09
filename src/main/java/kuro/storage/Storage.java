@@ -44,7 +44,6 @@ public class Storage {
             Files.createFile(filepath);
             return tasks;
         }
-        
         try (Scanner sc = new Scanner(filepath.toFile())) {
             processLoadLine(sc, tasks);
         } catch (FileNotFoundException e) {
@@ -53,7 +52,13 @@ public class Storage {
 
         return tasks;
     }
-    
+    /**
+     * Excutes actions based on a line of String loaded from txt file.
+     *
+     * @param sc Scanner that is being used to scan the text file
+     * @param tasks Current Active TasList
+     * @throws KuroException If Scanner cannot be created.
+     */
     public void processLoadLine(Scanner sc, ArrayList<Task> tasks) throws KuroException {
         while (sc.hasNextLine()) {
             String line = sc.nextLine();

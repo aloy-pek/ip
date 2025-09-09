@@ -43,10 +43,10 @@ public class CommandParserTest {
 
     @Test
     public void commandParsing_validEvent() throws KuroException {
-        Task expected = parser.parse("event Party /from 2024-09-25 18:00 /to 2024-09-25 00:00", tasks);
+        Task expected = parser.parse("event Party /from 2024-09-25 18:00 /to 2024-09-26 00:00", tasks);
         Event actual = new Event("Party",
                 LocalDateTime.parse("2024-09-25T18:00", DateTimeFormatter.ISO_DATE_TIME),
-                LocalDateTime.parse("2024-09-25T00:00", DateTimeFormatter.ISO_DATE_TIME));
+                LocalDateTime.parse("2024-09-26T00:00", DateTimeFormatter.ISO_DATE_TIME));
         assertEquals(actual.toString(), expected.toString());
     }
 

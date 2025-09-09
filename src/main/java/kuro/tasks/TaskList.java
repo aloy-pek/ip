@@ -9,7 +9,9 @@ import kuro.exceptions.KuroException;
  */
 public class TaskList {
     private ArrayList<Task> tasks;
-
+    /**
+     * TaskList class constructor
+     */
     public TaskList(ArrayList<Task> tasks) {
         assert tasks != null : "Task list cannot be null";
         this.tasks = tasks;
@@ -82,11 +84,18 @@ public class TaskList {
         }
         return filteredList;
     }
-    
+
+    /**
+     * Returns a boolean indicating presence of duplication.
+     *
+     * @param description The String representation of task to be added.
+     * @return boolean indicating presence of duplication
+     * @throws KuroException If searchString cannot be found in taskList.
+     */
     public boolean hasDuplicate(String description) {
-        try  {
+        try {
             TaskList filteredTasks = this.filterTaskByKeyword(description);
-        } catch(KuroException e) {
+        } catch (KuroException e) {
             return false;
         }
         return true;

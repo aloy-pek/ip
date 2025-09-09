@@ -43,20 +43,16 @@ public class CommandParser {
             throw new KuroException(Messages.UNREGISTERED_COMMAND);
         }
     }
-    
     private Task parseTodo(String fullCommand, TaskList tasks) throws KuroException {
         if (fullCommand.length() < 4) {
             throw new KuroException(Messages.MISSING_TASK_DESCRIPTION);
         }
-        
         String description = fullCommand.substring(fullCommand.indexOf(" ") + 1);
         if (tasks.hasDuplicate(description)) {
             throw new KuroException(Messages.DUPLICATE_ERROR);
         }
         return new Todo(description);
     }
-
-
     private Task parseDeadline(String fullCommand, TaskList tasks) throws KuroException {
         boolean isInvalidDeadlineCommand = !fullCommand.contains("/by") || fullCommand.length() < 13;
         if (isInvalidDeadlineCommand) {
@@ -67,7 +63,6 @@ public class CommandParser {
         if (tasks.hasDuplicate(description)) {
             throw new KuroException(Messages.DUPLICATE_ERROR);
         }
-        
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(by, formatter);
@@ -76,13 +71,11 @@ public class CommandParser {
             throw new KuroException(Messages.INVALID_DATE);
         }
     }
-    
     private Task parseEvent(String fullCommand, TaskList tasks) throws KuroException {
         boolean isInvalidEventCommand = !fullCommand.contains("/from")
                 || !fullCommand.contains("/to")
                 || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")
                 || fullCommand.length() < 18;
-        
         if (isInvalidEventCommand) {
             throw new KuroException(Messages.INVALID_COMMAND);
         }
@@ -93,7 +86,6 @@ public class CommandParser {
         if (tasks.hasDuplicate(description)) {
             throw new KuroException(Messages.DUPLICATE_ERROR);
         }
-        
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime startDateTime = LocalDateTime.parse(start, formatter);
