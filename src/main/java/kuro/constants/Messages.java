@@ -31,4 +31,5 @@ public class Messages {
              %s""";
     public static final String ERROR_MESSAGE = """
              Error while interacting with Kuro: %s""";
+    public static final String DUPLICATE_ERROR = "Sumimasen, this current has already exists.";
 }
