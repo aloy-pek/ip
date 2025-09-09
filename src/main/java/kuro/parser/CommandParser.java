@@ -40,13 +40,13 @@ public class CommandParser {
         case "list", "bye":
             return new Task(command); //misc task
         default:
-            throw new KuroException("Sumimasen, specified command is not a registered command");
+            throw new KuroException(Messages.UNREGISTERED_COMMAND);
         }
     }
-
+    
     private Task parseTodo(String fullCommand, TaskList tasks) throws KuroException {
         if (fullCommand.length() < 4) {
-            throw new KuroException("Sumimasen, please specify the task description.");
+            throw new KuroException(Messages.MISSING_TASK_DESCRIPTION);
         }
         
         String description = fullCommand.substring(fullCommand.indexOf(" ") + 1);
@@ -56,11 +56,12 @@ public class CommandParser {
         return new Todo(description);
     }
 
-    private Task parseDeadline(String fullCommand, TaskList tasks) throws KuroException {
-        if (!fullCommand.contains("/by") || fullCommand.length() < 13) {
-            throw new KuroException("Sumimasen, invalid command or format. Please try again.");
-        }
 
+    private Task parseDeadline(String fullCommand, TaskList tasks) throws KuroException {
+        boolean isInvalidDeadlineCommand = !fullCommand.contains("/by") || fullCommand.length() < 13;
+        if (isInvalidDeadlineCommand) {
+            throw new KuroException(Messages.INVALID_COMMAND);
+        }
         String description = fullCommand.substring(9, fullCommand.indexOf("/by")).trim();
         String by = fullCommand.substring(fullCommand.indexOf("/by") + 4).trim();
         if (tasks.hasDuplicate(description)) {
@@ -72,16 +73,18 @@ public class CommandParser {
             LocalDateTime dateTime = LocalDateTime.parse(by, formatter);
             return new Deadline(description, dateTime);
         } catch (DateTimeParseException e) {
-            throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
+            throw new KuroException(Messages.INVALID_DATE);
         }
     }
-
+    
     private Task parseEvent(String fullCommand, TaskList tasks) throws KuroException {
-        if (!fullCommand.contains("/from")
+        boolean isInvalidEventCommand = !fullCommand.contains("/from")
                 || !fullCommand.contains("/to")
                 || fullCommand.indexOf("/to") < fullCommand.indexOf("/from")
-                || fullCommand.length() < 18) {
-            throw new KuroException("Sumimasen, invalid command or format. Please try again.");
+                || fullCommand.length() < 18;
+        
+        if (isInvalidEventCommand) {
+            throw new KuroException(Messages.INVALID_COMMAND);
         }
         String description = fullCommand.substring(6, fullCommand.indexOf("/from")).trim();
         String start = fullCommand.substring(fullCommand.indexOf("/from") + 6, fullCommand.indexOf("/to")).trim();
@@ -97,7 +100,7 @@ public class CommandParser {
             LocalDateTime endDateTime = LocalDateTime.parse(end, formatter);
             return new Event(description, startDateTime, endDateTime);
         } catch (DateTimeParseException e) {
-            throw new KuroException("Invalid date format, Please use yyyy-MM-dd HH:mm");
+            throw new KuroException(Messages.INVALID_DATE);
         }
     }
 
@@ -105,11 +108,11 @@ public class CommandParser {
     private Task parseTaskCommand(String fullCommand) throws KuroException {
         try {
             if (fullCommand.split(" ").length < 2) {
-                throw new KuroException("Sumimasen, invalid command or format. Please try again.");
+                throw new KuroException(Messages.INVALID_COMMAND);
             }
             return new Task(fullCommand.split(" ")[0]);
         } catch (Exception e) {
-            throw new KuroException("Sumimasen, invalid command or format. Please try again.");
+            throw new KuroException(Messages.INVALID_COMMAND);
         }
     }
 
