@@ -28,9 +28,10 @@ cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
 
 # compare the output to the expected output
+sed -i 's|\\|/|g' ACTUAL.TXT EXPECTED-UNIX.TXT
 diff ACTUAL.TXT EXPECTED-UNIX.TXT
 if [ $? -eq 0 ]
-then
+thent
     echo "Test result: PASSED"
     exit 0
 else
