@@ -1,6 +1,6 @@
 ____________________________________________________________
- Konnichiwa! I'm Kuro
- What can I do for you?
+Konnichiwa! I'm Kuro
+What can I do for you?
 ____________________________________________________________
 
 >
@@ -10,62 +10,61 @@ ____________________________________________________________
 
 >
 ____________________________________________________________
-Error while interacting with Kuro: Sumimasen, please specify the task description.
-____________________________________________________________
-
->
-____________________________________________________________
-Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
-____________________________________________________________
-
->
-____________________________________________________________
-Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
-____________________________________________________________
-
->
-____________________________________________________________
-Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
-____________________________________________________________
-
->
-____________________________________________________________
-Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
-____________________________________________________________
-
->
-____________________________________________________________
-Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
-____________________________________________________________
-
->
-____________________________________________________________
 Wakarimashita, I have added this task:
-[T][ ] Brush Teeth
-Now, you have 1 tasks in the list.
+[T][ ] todo
+Now, you have 3 tasks in the list.
 ____________________________________________________________
 
 >
 ____________________________________________________________
-Wakarimashita, I have added this task:
-[D][ ] Read Book (by: 30/11/2025 10:00)
-Now, you have 2 tasks in the list.
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
+____________________________________________________________
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
+____________________________________________________________
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
+____________________________________________________________
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
+____________________________________________________________
+Error while interacting with Kuro: Sumimasen, invalid command or format. Please try again.
+____________________________________________________________
+
+>
+____________________________________________________________
+Error while interacting with Kuro: Sumimasen, this current has already exists.
+____________________________________________________________
+
+>
+____________________________________________________________
+Error while interacting with Kuro: Sumimasen, this current has already exists.
 ____________________________________________________________
 
 >
 ____________________________________________________________
 Wakarimashita, I have added this task:
 [E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
-Now, you have 3 tasks in the list.
+Now, you have 4 tasks in the list.
 ____________________________________________________________
 
 >
 ____________________________________________________________
 Douzo,Here are the task in your list:
 
-1. [T][ ] Brush Teeth
-2. [D][ ] Read Book (by: 30/11/2025 10:00)
-3. [E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
+1. [T][X] Brush Teeth
+2. [D][X] Read Book (by: 30/11/2025 10:00)
+3. [T][ ] todo
+4. [E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
 ____________________________________________________________
 
 >
@@ -88,18 +87,19 @@ ____________________________________________________________
 >
 ____________________________________________________________
 Sugoi, I have marked this task as done:
+[T][X] todo
+____________________________________________________________
+
+>
+____________________________________________________________
+Sugoi, I have marked this task as done:
 [E][X] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
 ____________________________________________________________
 
 >
 ____________________________________________________________
-Error while interacting with Kuro: Index out of bounds
-____________________________________________________________
-
->
-____________________________________________________________
 Hai, I have marked this task as not done yet:
-[E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
+[T][ ] todo
 ____________________________________________________________
 
 >
@@ -108,18 +108,21 @@ Douzo,Here are the task in your list:
 
 1. [T][X] Brush Teeth
 2. [D][X] Read Book (by: 30/11/2025 10:00)
-3. [E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
-____________________________________________________________
-
->
-____________________________________________________________
-Error while interacting with Kuro: Index out of bounds
+3. [T][ ] todo
+4. [E][X] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
 ____________________________________________________________
 
 >
 ____________________________________________________________
 Hai, I have removed this task:
-[E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
+[E][X] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
+Now, you have 3 tasks in the list.
+____________________________________________________________
+
+>
+____________________________________________________________
+Hai, I have removed this task:
+[T][ ] todo
 Now, you have 2 tasks in the list.
 ____________________________________________________________
 
@@ -134,6 +137,6 @@ ____________________________________________________________
 >
 .\data\kuro.txt
 ____________________________________________________________
- Sayonara! Hope to see you again soon!
+Sayonara! Hope to see you again soon!
 ____________________________________________________________
 
