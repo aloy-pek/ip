@@ -10,9 +10,7 @@ ____________________________________________________________
 
 >
 ____________________________________________________________
-Wakarimashita, I have added this task:
-[T][ ] todo
-Now, you have 3 tasks in the list.
+Error while interacting with Kuro: Sumimasen, please specify the task description.
 ____________________________________________________________
 
 >
@@ -42,19 +40,19 @@ ____________________________________________________________
 
 >
 ____________________________________________________________
-Error while interacting with Kuro: Sumimasen, this current has already exists.
+Error while interacting with Kuro: Sumimasen, this task already exists.
 ____________________________________________________________
 
 >
 ____________________________________________________________
-Error while interacting with Kuro: Sumimasen, this current has already exists.
+Error while interacting with Kuro: Sumimasen, this task already exists.
 ____________________________________________________________
 
 >
 ____________________________________________________________
 Wakarimashita, I have added this task:
 [E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
-Now, you have 4 tasks in the list.
+Now, you have 3 tasks in the list.
 ____________________________________________________________
 
 >
@@ -63,8 +61,7 @@ Douzo,Here are the task in your list:
 
 1. [T][X] Brush Teeth
 2. [D][X] Read Book (by: 30/11/2025 10:00)
-3. [T][ ] todo
-4. [E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
+3. [E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
 ____________________________________________________________
 
 >
@@ -87,19 +84,18 @@ ____________________________________________________________
 >
 ____________________________________________________________
 Sugoi, I have marked this task as done:
-[T][X] todo
-____________________________________________________________
-
->
-____________________________________________________________
-Sugoi, I have marked this task as done:
 [E][X] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
 ____________________________________________________________
 
 >
 ____________________________________________________________
+Error while interacting with Kuro: Index out of bounds
+____________________________________________________________
+
+>
+____________________________________________________________
 Hai, I have marked this task as not done yet:
-[T][ ] todo
+[E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
 ____________________________________________________________
 
 >
@@ -108,21 +104,18 @@ Douzo,Here are the task in your list:
 
 1. [T][X] Brush Teeth
 2. [D][X] Read Book (by: 30/11/2025 10:00)
-3. [T][ ] todo
-4. [E][X] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
+3. [E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
+____________________________________________________________
+
+>
+____________________________________________________________
+Error while interacting with Kuro: Index out of bounds
 ____________________________________________________________
 
 >
 ____________________________________________________________
 Hai, I have removed this task:
-[E][X] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
-Now, you have 3 tasks in the list.
-____________________________________________________________
-
->
-____________________________________________________________
-Hai, I have removed this task:
-[T][ ] todo
+[E][ ] Write Reflection (From: 20/09/2025 18:00 to: 20/10/2022 20:00)
 Now, you have 2 tasks in the list.
 ____________________________________________________________
 
@@ -135,7 +128,6 @@ Douzo,Here are the task in your list:
 ____________________________________________________________
 
 >
-.\data\kuro.txt
 ____________________________________________________________
 Sayonara! Hope to see you again soon!
 ____________________________________________________________
