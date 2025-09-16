@@ -41,6 +41,7 @@ public class Kuro {
             this.tasks = new TaskList(new ArrayList<Task>());
         } catch (IOException e) {
             ui.showError(Messages.ERROR_LOADING_FILE_MESSAGE);
+            this.tasks = new TaskList(new ArrayList<Task>());
         }
     }
 
@@ -137,42 +138,45 @@ public class Kuro {
      * @return String representation of response from Kuro.
      */
     public String executeCommand(String input) {
-        Task newTask;
-        int index;
-
         try {
-            newTask = this.parser.parse(input, this.tasks);
+            Task newTask = this.parser.parse(input, this.tasks);
+            int index;
+
+            switch (newTask.getDescription()) {
+            case "bye":
+                try {
+                    storage.save(this.tasks.getAllTasks());
+                } catch (IOException e) {
+                    return ui.showError(Messages.ERROR_SAVING_FILE_MESSAGE);
+                }
+                return Messages.GOODBYE_MESSAGE;
+            case "find":
+                String searchString = input.split(" ")[1];
+                return this.filterTaskList(searchString);
+            case "mark":
+                return this.markTaskAsDone(extractIndex(input));
+            case "unmark":
+                return this.markTaskAsNotDone(extractIndex(input));
+            case "delete":
+                return this.deleteTask(extractIndex(input));
+            case "list":
+                return this.listTasks();
+            default:
+                if (newTask.getDescription().isEmpty()) {
+                    return ui.showError(Messages.ERROR_MISSING_COMMAND_MESSAGE);
+                }
+                return this.addTask(newTask);
+            }
         } catch (KuroException e) {
             return ui.showError(e.getMessage());
         }
+    }
 
-        switch (newTask.getDescription()) {
-        case "bye":
-            try {
-                storage.save(this.tasks.getAllTasks());
-            } catch (IOException e) {
-                return ui.showError(Messages.ERROR_SAVING_FILE_MESSAGE);
-            }
-            return Messages.GOODBYE_MESSAGE;
-        case "find":
-            String searchString = input.split(" ")[1];
-            return this.filterTaskList(searchString);
-        case "mark":
-            index = Integer.parseInt(input.split(" ")[1]) - 1;
-            return this.markTaskAsDone(index);
-        case "unmark":
-            index = Integer.parseInt(input.split(" ")[1]) - 1;
-            return this.markTaskAsNotDone(index);
-        case "delete":
-            index = Integer.parseInt(input.split(" ")[1]) - 1;
-            return this.deleteTask(index);
-        case "list":
-            return this.listTasks();
-        default:
-            if (newTask.getDescription().isEmpty()) {
-                return ui.showError(Messages.ERROR_MISSING_COMMAND_MESSAGE);
-            }
-            return this.addTask(newTask);
+    private int extractIndex(String input) throws KuroException {
+        try {
+            return Integer.parseInt(input.split(" ")[1]) - 1;
+        } catch (Exception e) {
+            throw new KuroException(Messages.INVALID_COMMAND);
         }
     }
 

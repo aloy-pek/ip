@@ -1,5 +1,6 @@
 package kuro.parser;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -51,7 +52,37 @@ public class CommandParserTest {
     }
 
     @Test
-    public void commandParsing_invalidList() {
+    public void commandParsing_invalidListCommand_exceptionThrown() {
         assertThrows(KuroException.class, () -> parser.parse("lis", tasks));
+    }
+
+    @Test
+    public void commandParsing_todoMissingDescription_exceptionThrown() {
+        assertThrows(KuroException.class, () -> parser.parse("todo", tasks));
+    }
+
+    @Test
+    public void commandParsing_duplicateTodo_exceptionThrown() {
+        TaskList currentTasks = new TaskList(new ArrayList<>());
+        assertDoesNotThrow(() -> currentTasks.addTask(parser.parse("todo Clean up", currentTasks)));
+        assertThrows(KuroException.class, () -> parser.parse("todo Clean up", currentTasks));
+    }
+
+    @Test
+    public void commandParsing_deadlineMissingDate_exceptionThrown() {
+        assertThrows(KuroException.class, () -> parser.parse("deadline CS2103T IP", tasks));
+    }
+    @Test
+    public void commandParsing_deadlineIncorrectDateFormat_exceptionThrown() {
+        String command = "deadline CS2103T IP /by 25-09-2024 18:00";
+        assertThrows(KuroException.class, () -> parser.parse(command, tasks));
+    }
+
+    @Test
+    public void commandParsing_duplicateDeadline_exceptionThrown() {
+        String command = "deadline CS2103T IP /by 2025-09-25 18:00";
+        TaskList currentTasks = new TaskList(new ArrayList<>());
+        assertDoesNotThrow(() -> currentTasks.addTask(parser.parse(command, currentTasks)));
+        assertThrows(KuroException.class, () -> parser.parse(command, currentTasks));
     }
 }

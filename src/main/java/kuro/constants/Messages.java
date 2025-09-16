@@ -31,7 +31,7 @@ public class Messages {
              %s""";
     public static final String ERROR_MESSAGE = """
              Error while interacting with Kuro: %s""";
-    public static final String DUPLICATE_ERROR = "Sumimasen, this current has already exists.";
+    public static final String DUPLICATE_ERROR = "Sumimasen, this task already exists.";
     public static final String ERROR_LOADING_FILE_MESSAGE = "Error Loading File";
     public static final String ERROR_SAVING_FILE_MESSAGE = "Error saving data";
     public static final String ERROR_MISSING_COMMAND_MESSAGE = "Please enter your command";

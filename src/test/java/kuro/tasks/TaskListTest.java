@@ -14,16 +14,32 @@ public class TaskListTest {
     private static final TaskList lists = new TaskList(new ArrayList<Task>());
 
     @Test
-    public void taskList_addTask_noExceptionThrown() {
+    public void addTask_validTask_noExceptionThrown() {
         Todo task = new Todo("Clean up");
         Assertions.assertDoesNotThrow(() -> {
             lists.addTask(task);
-            ;
         });
     }
 
     @Test
-    public void taskList_getTask_returnTask() {
+    public void addTask_multipleTasks_sizeIncreases() {
+        TaskList activeLists = new TaskList(new ArrayList<>());
+
+        activeLists.addTask(new Todo("Read book"));
+        activeLists.addTask(new Todo("Clean room"));
+
+        assertEquals(2, activeLists.getSize());
+    }
+
+    @Test
+    public void addTask_nullTask_assertionError() {
+        Assertions.assertThrows(AssertionError.class, () -> {
+            lists.addTask(null);
+        });
+    }
+
+    @Test
+    public void getTask_validTask_returnTask() {
         Todo actualTask = new Todo("Clean up");
         lists.addTask(actualTask);
         Task expectedTask = new Task("Failed Example");

@@ -5,4 +5,5 @@ package kuro.constants;
  */
 public class StorageConstants {
     public static final String FILE_PATH = "./data/kuro.txt";
+    public static final String DELIMITER = " \\| ";
 }

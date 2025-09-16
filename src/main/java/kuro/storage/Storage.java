@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import kuro.constants.Messages;
+import kuro.constants.StorageConstants;
 import kuro.exceptions.KuroException;
 import kuro.tasks.Deadline;
 import kuro.tasks.Event;
@@ -45,7 +46,7 @@ public class Storage {
             return tasks;
         }
         try (Scanner sc = new Scanner(filepath.toFile())) {
-            processLoadLine(sc, tasks);
+            readTasksFromScanner(sc, tasks);
         } catch (FileNotFoundException e) {
             throw new KuroException(Messages.ERROR_LOADING_FILE_MESSAGE);
         }
@@ -59,10 +60,10 @@ public class Storage {
      * @param tasks Current Active TasList
      * @throws KuroException If Scanner cannot be created.
      */
-    public void processLoadLine(Scanner sc, ArrayList<Task> tasks) throws KuroException {
+    public void readTasksFromScanner(Scanner sc, ArrayList<Task> tasks) throws KuroException {
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
-            String[] parts = line.split(" \\| ");
+            String[] parts = line.split(StorageConstants.DELIMITER);
             String type = parts[0];
             boolean isDone = parts[1].equals("1");
             String description = parts[2];
@@ -112,6 +113,5 @@ public class Storage {
                 writer.newLine();
             }
         }
-        System.out.println(filepath.toString());
     }
 }

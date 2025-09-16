@@ -1,8 +1,6 @@
 T | 0 | twice
-D | 1 | do 2103T | 2025-08-30T12:00
 E | 1 | fly kite | 2024-09-20T16:00 | 2025-09-22T18:00
-T | 0 | Fly
-T | 0 | kiss
-T | 1 | Eat
-T | 0 | Play Basketball
+T | 1 | Fly
+T | 0 | Eat
+T | 1 | Play Basketball
 T | 0 | twice twice
