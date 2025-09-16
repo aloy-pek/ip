@@ -8,17 +8,17 @@
 
 Kuro is a **personal task management** chatbot with GUI that helps you stay organized and productive.
 Using simple text commands, you can:
-- "List all your task"
-- "Add new tasks"
-- "Delete tasks you no longer need"
-- "Mark tasks as done"
-- "Unmark tasks if needed"
-- "Filter out a specific task with fuzzy search"
+- List all your task
+- Add new tasks
+- Delete tasks you no longer need
+- Mark tasks as done
+- Unmark tasks if needed
+- Filter out a specific task with fuzzy search
 
 Kuro currently supports multiple task types:
-1. "Todos: simple tasks without specific timeline"
-2. "Deadlines: tasks with a due date"
-3. "Events: Tasks with start and end times"
+1. Todos: simple tasks without specific timeline
+2. Deadlines: tasks with a due date
+3. Events: Tasks with start and end times
 
 Whether you are managing school, work or personal goals, Kuro can help you easily keep track of everything in one place
 
