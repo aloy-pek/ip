@@ -1,10 +1,10 @@
 # Kuro User Guide
 
-// Update the title above to match the actual product name
+<!--- // Update the title above to match the actual product name -->
 
-// Product screenshot goes here
+<!--- // Product screenshot goes here -->
 ![Image of UI](ui.png)
-// Product intro goes here
+<!-- // Product intro goes here --> 
 
 Kuro is a **personal task management** chatbot with GUI that helps you stay organized and productive.
 Using simple text commands, you can:
@@ -24,13 +24,13 @@ Whether you are managing school, work or personal goals, Kuro can help you easil
 
 ## Adding Todos
 
-// Describe the action and its outcome.
+<!--- // Describe the action and its outcome. -->
 You can add a todo task with `todo [description]` command.
 
-// Give examples of usage
+<!--- // Give examples of usage -->
 Example: `todo Start TP discussion`
 
-// A description of the expected outcome goes here
+<!--- // A description of the expected outcome goes here -->
 Expected output:
 ```
 ____________________________________________________________
@@ -41,13 +41,13 @@ ____________________________________________________________
 ```
 ## Adding deadlines
 
-// Describe the action and its outcome.
+<!--- // Describe the action and its outcome. -->
 You can add a deadline task with `deadline [description] /by [deadline]` command.
 
-// Give examples of usage
+// Give examples of usage -->
 Example: `deadline Submit CS2103T IP /by 2025-09-19 17:00`
 
-// A description of the expected outcome goes here
+<!--- // A description of the expected outcome goes here -->
 Expected output:
 ```
 ____________________________________________________________
@@ -59,13 +59,13 @@ ____________________________________________________________
 
 ## Adding Events
 
-// Describe the action and its outcome.
+<!--- // Describe the action and its outcome. -->
 You can add a Event task with `Event [description] /from [start date] /to [end date]` command.
 
-// Give examples of usage
+<!--- // Give examples of usage -->
 Example: `event CS2103T Celebration /from 2025-09-19 17:00 /to 2025-09-20 02:00`
 
-// A description of the expected outcome goes here
+<!--- // A description of the expected outcome goes here -->
 Expected output:
 ```
 ____________________________________________________________
@@ -77,13 +77,13 @@ ____________________________________________________________
 
 ## Listing tasks
 
-// Describe the action and its outcome.
+<!--- // Describe the action and its outcome. -->
 You can get Kuro to display all your tasks with `list` command.
 
-// Give examples of usage
+<!--- // Give examples of usage -->
 Example: `list`
 
-// A description of the expected outcome goes here
+<!--- // A description of the expected outcome goes here -->
 Expected output:
 ```
 ____________________________________________________________
@@ -97,13 +97,13 @@ ____________________________________________________________
 
 ## Marking a task as completed
 
-// Describe the action and its outcome.
+<!--- // Describe the action and its outcome. -->
 You can have Kuro mark a task as completed with `mark [task number]` command.
 
-// Give examples of usage
+<!--- // Give examples of usage -->
 Example: `mark 2`
 
-// A description of the expected outcome goes here
+<!--- // A description of the expected outcome goes here -->
 Expected output:
 ```
 ____________________________________________________________
@@ -114,13 +114,13 @@ ____________________________________________________________
 
 ## Unmarking task
 
-// Describe the action and its outcome.
+<!--- // Describe the action and its outcome. -->
 You can ask Kuro to unmark a specific task with `Unmark [task number]` command.
 
-// Give examples of usage
+<!--- // Give examples of usage -->
 Example: `unmark 2`
 
-// A description of the expected outcome goes here
+<!--- // A description of the expected outcome goes here -->
 Expected output:
 ```
 ____________________________________________________________
@@ -131,13 +131,13 @@ ____________________________________________________________
 
 ## Deleting a task
 
-// Describe the action and its outcome.
+<!--- // Describe the action and its outcome. -->
 You can remove irrelevant task with `delete [task number]` command.
 
-// Give examples of usage
+<!--- // Give examples of usage -->
 Example: `delete 2`
 
-// A description of the expected outcome goes here
+<!--- // A description of the expected outcome goes here -->
 Expected output:
 ```
 ____________________________________________________________
@@ -149,13 +149,13 @@ ____________________________________________________________
 
 ## Finding specific task
 
-// Describe the action and its outcome.
+<!--- // Describe the action and its outcome. -->
 You can ask Kuro to filter your tasks to find a specific one with `find [task description]` command.
 
-// Give examples of usage
+<!--- // Give examples of usage -->
 Example: `find CS2103T`
 
-// A description of the expected outcome goes here
+<!--- // A description of the expected outcome goes here -->
 Expected output:
 ```
 ____________________________________________________________
@@ -168,13 +168,13 @@ ____________________________________________________________
 
 ## Exiting Kuro
 
-// Describe the action and its outcome.
+<!--- // Describe the action and its outcome. -->
 You can stop using kuro and exit with `bye` command.
 
-// Give examples of usage
+<!--- // Give examples of usage-->
 Example: `bye`
 
-// A description of the expected outcome goes here
+<!--- // A description of the expected outcome goes here -->
 Expected output:
 ```
 ____________________________________________________________
