@@ -46,7 +46,7 @@ public class Kuro {
     }
 
     /**
-     * Return the String of list of tasks.
+     * Returns the String of list of tasks.
      *
      * @return String representation of the current state of list of task.
      */
@@ -67,7 +67,7 @@ public class Kuro {
     }
 
     /**
-     * Get specific task from tasks and call tasks to delete it.
+     * Gets specific task from tasks and call tasks to delete it.
      * Returns the String obtained from sends task string representation and length of tasks to ui.
      *
      * @param index The index of task to be deleted
@@ -84,7 +84,7 @@ public class Kuro {
     }
 
     /**
-     * Get specific task from tasks and call tasks to mark it.
+     * Gets specific task from tasks and call tasks to mark it.
      * Return the String obtained from sending task string representation to ui.
      *
      * @param index The index of task to be marked.
@@ -100,7 +100,7 @@ public class Kuro {
     }
 
     /**
-     * Get specific task from tasks and call tasks to unmark it.
+     * Gets specific task from tasks and call tasks to unmark it.
      * Return the String obtained from sending task string representation to ui.
      *
      * @param index The index of task to be unmarked
@@ -116,7 +116,7 @@ public class Kuro {
     }
 
     /**
-     * Get filtered taskList from tasks.
+     * Gets filtered taskList from tasks.
      * Return the String obtained from sending filtered taskList to ui.
      *
      * @param searchString The keyword to be searched.
@@ -132,7 +132,7 @@ public class Kuro {
     }
 
     /**
-     * Return the String obtained from carrying out the command from input.
+     * Returns the String obtained from carrying out the command from input.
      *
      * @param input The command typed in CLI or GUI.
      * @return String representation of response from Kuro.
