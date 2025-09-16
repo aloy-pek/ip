@@ -1,6 +1,2 @@
-T | 0 | twice
-E | 1 | fly kite | 2024-09-20T16:00 | 2025-09-22T18:00
-T | 1 | Fly
-T | 0 | Eat
-T | 1 | Play Basketball
-T | 0 | twice twice
+D | 0 | Submit CS2103T IP | 2025-09-19T17:00
+E | 0 | CS2103T Celebration | 2025-09-19T17:00 | 2025-09-20T02:00
