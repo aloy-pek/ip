@@ -3,7 +3,7 @@
 <!--- // Update the title above to match the actual product name -->
 
 <!--- // Product screenshot goes here -->
-![Image of UI](ui.png)
+![Image of UI](Ui.png)
 <!-- // Product intro goes here --> 
 
 Kuro is a **personal task management** chatbot with GUI that helps you stay organized and productive.
